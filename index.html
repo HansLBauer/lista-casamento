@@ -589,6 +589,16 @@
               </div>
             </div>
 
+            <!-- CHECKBOX DESPEDIDA DE SOLTEIRO(A) - TITULAR -->
+            <div class="rounded-xl border border-[#f5dfb0] bg-[#fefaee] p-3 overflow-hidden">
+              <label class="flex items-center gap-2.5 cursor-pointer select-none">
+                <input id="chk-despedida" type="checkbox" class="w-4 h-4 rounded text-[#8c6222] focus:ring-[#f3ce85] shrink-0" />
+                <span class="text-xs sm:text-sm font-semibold text-[#8c6222] leading-snug">
+                  🥂 Será convidado(a) para a Despedida de Solteiro(a)?
+                </span>
+              </label>
+            </div>
+
             <!-- CHECKBOX 1: CRIANÇAS DO CONVIDADO TITULAR -->
             <div class="rounded-xl border border-[#e3decb] bg-[#faf8f1] p-3 space-y-2.5 overflow-hidden">
               <label class="flex items-center gap-2.5 cursor-pointer select-none">
@@ -676,6 +686,16 @@
                     </label>
                     <input id="input-acomp-instagram" type="text" placeholder="Ex: @usuario" class="input-wedding" autocomplete="off" />
                   </div>
+                </div>
+
+                <!-- CHECKBOX DESPEDIDA DE SOLTEIRO(A) - ACOMPANHANTE -->
+                <div class="rounded-lg border border-[#f5dfb0] bg-[#fefaee] p-2.5 overflow-hidden">
+                  <label class="flex items-center gap-2 cursor-pointer select-none">
+                    <input id="chk-acomp-despedida" type="checkbox" class="w-4 h-4 rounded text-[#8c6222] focus:ring-[#f3ce85] shrink-0" />
+                    <span class="text-xs font-semibold text-[#8c6222] leading-snug">
+                      🥂 Acompanhante será convidado(a) para a Despedida de Solteiro(a)?
+                    </span>
+                  </label>
                 </div>
 
                 <!-- Acompanhante NÃO leva acompanhante, mas pode levar criança -->
@@ -790,6 +810,7 @@
                   <th>Relação</th>
                   <th>Cidade</th>
                   <th>Padrinho / Madrinha</th>
+                  <th>Despedida</th>
                   <th>Faixa Etária</th>
                   <th>WhatsApp</th>
                   <th>Instagram</th>
@@ -1476,6 +1497,8 @@
             cidade: effCidade,
             cidadeBase: g.cidade,
             padrinho: g.padrinho || 'Não',
+            despedida: Boolean(g.despedida),
+            despedidaLabel: g.despedida ? 'Sim' : 'Não',
             telefone: formatPhoneBR(g.telefone || ''),
             instagram: g.instagram || '',
             idade: 'Adulto',
@@ -1509,6 +1532,8 @@
               cidade: effCidade,
               cidadeBase: g.cidade,
               padrinho: acompObj.padrinho || 'Não',
+              despedida: Boolean(acompObj.despedida),
+              despedidaLabel: acompObj.despedida ? 'Sim' : 'Não',
               telefone: formatPhoneBR(acompObj.telefone || ''),
               instagram: acompObj.instagram || '',
               idade: 'Adulto',
@@ -1552,6 +1577,8 @@
                 cidade: effCidade,
                 cidadeBase: g.cidade,
                 padrinho: 'Não',
+                despedida: false,
+                despedidaLabel: '-',
                 telefone: '',
                 instagram: '',
                 idade: kAge !== '' ? (kAge + ' anos') : '< 6 anos (A definir)',
@@ -1610,6 +1637,8 @@
                 cidade: effCidade,
                 cidadeBase: g.cidade,
                 padrinho: 'Não',
+                despedida: false,
+                despedidaLabel: '-',
                 telefone: '',
                 instagram: '',
                 idade: kAge !== '' ? (kAge + ' anos') : '< 6 anos (A definir)',
@@ -1647,6 +1676,7 @@
           padrinhosAmbos: 0,
           madrinhasAmbos: 0,
           totalPadrinhosMadrinhas: 0,
+          totalDespedida: 0,
           porCidade: {}
         };
 
@@ -1677,6 +1707,10 @@
           if (side === 'LAIS') stats.ladoLais++;
           else if (side === 'HANS') stats.ladoHans++;
           else stats.ladoAmbos++;
+
+          if (r.despedida) {
+            stats.totalDespedida++;
+          }
 
           // Padrinhos / Madrinhas count
           var p = r.padrinho || 'Não';
@@ -1823,6 +1857,14 @@
             padrinhoHtml = '<span class="badge-pill bg-[#fefaee] text-[#8c6222] border border-[#f3ce85]">🌻 ' + escapeHtml(r.padrinho) + '</span>';
           }
 
+          // Despedida de Solteiro(a) badge
+          var despedidaHtml = '<span class="text-xs text-[#6e7a62]">Não</span>';
+          if (r.roleCode.indexOf('CRIANCA') === 0) {
+            despedidaHtml = '<span class="text-xs text-[#9ca38f]">—</span>';
+          } else if (r.despedida) {
+            despedidaHtml = '<span class="badge-pill bg-[#f0f9f4] text-[#3d6b52] border border-[#c6e4d2]">🥂 Sim</span>';
+          }
+
           // Age / Classification badge
           var ageBadgeHtml = '';
           if (r.roleCode.indexOf('CRIANCA') === 0) {
@@ -1894,6 +1936,7 @@
             '</td>' +
             '<td class="font-medium text-[#24331b]">' + escapeHtml(r.cidade) + '</td>' +
             '<td>' + padrinhoHtml + '</td>' +
+            '<td>' + despedidaHtml + '</td>' +
             '<td>' + ageBadgeHtml + '</td>' +
             '<td>' + phoneHtml + '</td>' +
             '<td>' + instaHtml + '</td>' +
@@ -2108,6 +2151,7 @@
         document.getElementById('select-padrinho').value = g.padrinho || 'Não';
         document.getElementById('input-telefone').value = formatPhoneBR(g.telefone || '');
         document.getElementById('input-instagram').value = g.instagram || '';
+        document.getElementById('chk-despedida').checked = Boolean(g.despedida);
 
         // Titular children
         var chkTitularKids = document.getElementById('chk-titular-criancas');
@@ -2139,6 +2183,7 @@
           document.getElementById('select-acomp-padrinho').value = ac.padrinho || 'Não';
           document.getElementById('input-acomp-telefone').value = formatPhoneBR(ac.telefone || '');
           document.getElementById('input-acomp-instagram').value = ac.instagram || '';
+          document.getElementById('chk-acomp-despedida').checked = Boolean(ac.despedida);
 
           var chkAcompKids = document.getElementById('chk-acomp-criancas');
           var panelAcompKids = document.getElementById('panel-acomp-criancas');
@@ -2167,6 +2212,7 @@
           document.getElementById('select-acomp-padrinho').value = 'Não';
           document.getElementById('input-acomp-telefone').value = '';
           document.getElementById('input-acomp-instagram').value = '';
+          document.getElementById('chk-acomp-despedida').checked = false;
           document.getElementById('chk-acomp-criancas').checked = false;
           document.getElementById('panel-acomp-criancas').classList.add('hidden');
           document.getElementById('chk-criancas-compartilhadas').checked = false;
@@ -2251,6 +2297,7 @@
           cidadeOutros = '';
         }
         var padrinho = document.getElementById('select-padrinho').value || 'Não';
+        var despedida = document.getElementById('chk-despedida').checked;
         var telefone = formatPhoneBR(document.getElementById('input-telefone').value.trim());
         var instagram = document.getElementById('input-instagram').value.trim();
 
@@ -2261,6 +2308,7 @@
         var acompNome = document.getElementById('input-acomp-nome').value.trim();
         var acompSobrenome = document.getElementById('input-acomp-sobrenome').value.trim();
         var acompPadrinho = document.getElementById('select-acomp-padrinho').value || 'Não';
+        var acompDespedida = temAcompanhante && document.getElementById('chk-acomp-despedida').checked;
         var acompTelefone = formatPhoneBR(document.getElementById('input-acomp-telefone').value.trim());
         var acompInstagram = document.getElementById('input-acomp-instagram').value.trim();
         var temCriancasAcomp = temAcompanhante && document.getElementById('chk-acomp-criancas').checked;
@@ -2279,6 +2327,7 @@
           cidade: cidade,
           cidadeOutros: cidade === 'Outros' ? cidadeOutros : '',
           padrinho: padrinho,
+          despedida: despedida,
           telefone: telefone,
           instagram: instagram,
           temCriancasTitular: temCriancasTitular,
@@ -2288,6 +2337,7 @@
             nome: acompNome,
             sobrenome: acompSobrenome,
             padrinho: acompPadrinho,
+            despedida: acompDespedida,
             telefone: acompTelefone,
             instagram: acompInstagram,
             temCriancasAcomp: temCriancasAcomp,
@@ -3151,20 +3201,22 @@
           doc.text(c.sub, x + 3, cardY + 15.8);
         });
 
-        // Build 8-column table matching the exact layout from the reference screenshot:
-        // # | Nome e Sobrenome | Relação | Cidade | Vínculo / Padrinho | Idade | WhatsApp | Instagram
+        // Build 9-column table including "Despedida":
+        // # | Nome e Sobrenome | Relação | Cidade | Vínculo / Padrinho | Despedida | Idade | WhatsApp | Instagram
         var rowInstaInfos = [];
         var tableBody = rows.map(function (r) {
           var whatsappFormatted = r.telefone ? formatPhoneBR(r.telefone) : '-';
           var instaInfo = parseInstagramInfo(r.instagram);
           rowInstaInfos.push(instaInfo);
           var instaFormatted = instaInfo ? instaInfo.handle : '-';
+          var despedidaFormatted = r.roleCode.indexOf('CRIANCA') === 0 ? '-' : (r.despedida ? 'Sim' : 'Não');
           return [
             String(r.rowNum),
             r.nomeExibicao,
             r.pdfRelacao || r.relacao,
             r.cidade || '-',
             r.pdfVinculo || 'Não',
+            despedidaFormatted,
             r.pdfIdade || '-',
             whatsappFormatted,
             instaFormatted
@@ -3172,7 +3224,7 @@
         });
 
         if (tableBody.length === 0) {
-          tableBody.push(['-', 'Nenhum convidado cadastrado no momento', '-', '-', '-', '-', '-', '-']);
+          tableBody.push(['-', 'Nenhum convidado cadastrado no momento', '-', '-', '-', '-', '-', '-', '-']);
         }
 
         doc.autoTable({
@@ -3184,6 +3236,7 @@
             'Relação',
             'Cidade',
             'Vínculo / Padrinho',
+            'Despedida',
             'Idade',
             'WhatsApp',
             'Instagram'
@@ -3192,8 +3245,8 @@
           theme: 'grid',
           styles: {
             font: 'helvetica',
-            fontSize: 8.8,
-            cellPadding: { top: 3.2, right: 3, bottom: 3.2, left: 3.2 },
+            fontSize: 8.6,
+            cellPadding: { top: 3.1, right: 2.6, bottom: 3.1, left: 2.8 },
             textColor: [58, 56, 52],
             fillColor: [252, 250, 247], // Soft pastel cream-ivory row background (#fcfaf7)
             lineColor: [232, 228, 220], // Soft pastel warm border (#e8e4dc)
@@ -3205,23 +3258,24 @@
             fillColor: [98, 124, 94],   // Soft Pastel Sage-Olive Table Header (#627c5e)
             textColor: [255, 255, 255],
             fontStyle: 'bold',
-            fontSize: 9,
+            fontSize: 8.6,
             halign: 'left',
             valign: 'middle',
-            cellPadding: { top: 3.4, right: 3, bottom: 3.4, left: 3.2 }
+            cellPadding: { top: 3.3, right: 2.6, bottom: 3.3, left: 2.8 }
           },
           columnStyles: {
-            0: { halign: 'center', cellWidth: 10, textColor: [75, 75, 75] },
-            1: { cellWidth: 50, cellPadding: { top: 3.2, right: 3, bottom: 3.2, left: 5 } },
-            2: { cellWidth: 41, fontStyle: 'bold' },
-            3: { cellWidth: 33 },
-            4: { cellWidth: 44 },
-            5: { halign: 'center', cellWidth: 16 },
-            6: { cellWidth: 33, overflow: 'ellipsize' },
-            7: { cellWidth: 42, overflow: 'ellipsize', cellPadding: { top: 3.2, right: 2.2, bottom: 3.2, left: 2.5 } }
+            0: { halign: 'center', cellWidth: 9, textColor: [75, 75, 75] },
+            1: { cellWidth: 46, cellPadding: { top: 3.1, right: 2.6, bottom: 3.1, left: 4.8 } },
+            2: { cellWidth: 38, fontStyle: 'bold' },
+            3: { cellWidth: 30 },
+            4: { cellWidth: 39 },
+            5: { halign: 'center', cellWidth: 20 },
+            6: { halign: 'center', cellWidth: 15 },
+            7: { cellWidth: 32, overflow: 'ellipsize' },
+            8: { cellWidth: 40, overflow: 'ellipsize', cellPadding: { top: 3.1, right: 2.0, bottom: 3.1, left: 2.3 } }
           },
           didParseCell: function (data) {
-            if (data.section === 'head' && (data.column.index === 0 || data.column.index === 5)) {
+            if (data.section === 'head' && (data.column.index === 0 || data.column.index === 5 || data.column.index === 6)) {
               data.cell.styles.halign = 'center';
             }
             if (data.section === 'body') {
@@ -3238,8 +3292,19 @@
                 data.cell.styles.fontSize = theme.relFontSize;
               }
 
-              // Column 7: "Instagram" — guarantee zero line breaks + style as clickable link when present
-              if (data.column.index === 7) {
+              // Column 5: "Despedida" — highlight "Sim" in soft pastel mint
+              if (data.column.index === 5) {
+                if (rObj.despedida) {
+                  data.cell.styles.fillColor = [240, 249, 244]; // Soft pastel mint (#f0f9f4)
+                  data.cell.styles.textColor = [61, 107, 82];   // Deep sage-mint (#3d6b52)
+                  data.cell.styles.fontStyle = 'bold';
+                } else {
+                  data.cell.styles.textColor = [130, 136, 124];
+                }
+              }
+
+              // Column 8: "Instagram" — guarantee zero line breaks + style as clickable link when present
+              if (data.column.index === 8) {
                 var instaInfo = rowInstaInfos[rowIdx];
                 if (instaInfo) {
                   var handleText = instaInfo.handle;
@@ -3247,13 +3312,13 @@
                   data.cell.text = [handleText];
                   var len = handleText.length;
                   if (len > 26) {
-                    data.cell.styles.fontSize = 6.5;
+                    data.cell.styles.fontSize = 6.4;
                   } else if (len > 22) {
-                    data.cell.styles.fontSize = 7.2;
+                    data.cell.styles.fontSize = 7.0;
                   } else if (len > 18) {
-                    data.cell.styles.fontSize = 8.0;
+                    data.cell.styles.fontSize = 7.8;
                   } else {
-                    data.cell.styles.fontSize = 8.6;
+                    data.cell.styles.fontSize = 8.4;
                   }
                   data.cell.styles.textColor = [59, 98, 138]; // Soft pastel link blue (#3b628a)
                   data.cell.styles.fontStyle = 'bold';
@@ -3273,7 +3338,7 @@
             }
 
             // Add interactive PDF hyperlink over the entire Instagram cell so tapping it opens the Instagram app
-            if (data.section === 'body' && data.column.index === 7) {
+            if (data.section === 'body' && data.column.index === 8) {
               var instaInfoLink = rowInstaInfos[data.row.index];
               if (instaInfoLink && instaInfoLink.url) {
                 doc.link(data.cell.x, data.cell.y, data.cell.width, data.cell.height, {
