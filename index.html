@@ -1345,6 +1345,27 @@
         });
       }
 
+      // Normalize Instagram input into a clean @handle and a direct https://www.instagram.com/<username>/ URL
+      function parseInstagramInfo(raw) {
+        if (!raw) return null;
+        var val = String(raw).trim();
+        if (!val || val === '-') return null;
+        var username = val;
+        // Strip full Instagram URLs if the user pasted a profile link
+        var urlMatch = val.match(/(?:https?:\/\/)?(?:www\.)?instagram\.com\/([A-Za-z0-9._]+)/i);
+        if (urlMatch && urlMatch[1]) {
+          username = urlMatch[1];
+        } else {
+          username = val.replace(/^@+/, '').replace(/\/+$/, '').trim();
+        }
+        if (!username) return null;
+        return {
+          username: username,
+          handle: '@' + username,
+          url: 'https://www.instagram.com/' + encodeURIComponent(username) + '/'
+        };
+      }
+
       // Age rule: below 6 years (< 6) is Child; 6 or older (>= 6) is Adult.
       // If age is left blank on a child entry, default to < 6 (Child) until edited.
       function isChildUnder6(idadeStr) {
@@ -1804,12 +1825,31 @@
             ageBadgeHtml = '<span class="text-xs font-medium text-[#324626]">Adulto</span>';
           }
 
-          // Contact column
+          // Contact column (with clickable Instagram link that opens in Instagram app & never wraps)
           var contactParts = [];
-          if (r.telefone) contactParts.push('📱 ' + escapeHtml(r.telefone));
-          if (r.instagram) contactParts.push('📸 ' + escapeHtml(r.instagram));
+          if (r.telefone) {
+            var waDigits = String(r.telefone).replace(/\D/g, '');
+            if (waDigits.length >= 10) {
+              var waHref = 'https://wa.me/55' + waDigits;
+              contactParts.push(
+                '<a href="' + escapeHtml(waHref) + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[#2e462c] hover:text-[#15803d] hover:underline font-medium nowrap-strict" title="Abrir conversa no WhatsApp">' +
+                  '<span>📱</span><span>' + escapeHtml(r.telefone) + '</span>' +
+                '</a>'
+              );
+            } else {
+              contactParts.push('<span class="nowrap-strict">📱 ' + escapeHtml(r.telefone) + '</span>');
+            }
+          }
+          var instaObj = parseInstagramInfo(r.instagram);
+          if (instaObj) {
+            contactParts.push(
+              '<a href="' + escapeHtml(instaObj.url) + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#fdf2f8] hover:bg-[#fce7f3] text-[#9d174d] border border-[#fbcfe8] font-semibold transition nowrap-strict" title="Abrir perfil no aplicativo do Instagram">' +
+                '<span>📸</span><span>' + escapeHtml(instaObj.handle) + '</span>' +
+              '</a>'
+            );
+          }
           var contactHtml = contactParts.length > 0
-            ? '<div class="text-xs text-[#324626] space-x-2 nowrap-strict">' + contactParts.join(' • ') + '</div>'
+            ? '<div class="text-xs text-[#324626] flex items-center gap-2 nowrap-strict">' + contactParts.join('') + '</div>'
             : '<span class="text-xs text-[#9ca38f]">—</span>';
 
           // Actions column (Edit & Delete on every row, targeting the group)
@@ -2984,12 +3024,12 @@
 
         // Build 8-column table matching the exact layout from the reference screenshot:
         // # | Nome e Sobrenome | Relação | Cidade | Vínculo / Padrinho | Idade | WhatsApp | Instagram
+        var rowInstaInfos = [];
         var tableBody = rows.map(function (r) {
           var whatsappFormatted = r.telefone ? formatPhoneBR(r.telefone) : '-';
-          var instaFormatted = r.instagram ? r.instagram.trim() : '-';
-          if (instaFormatted !== '-' && instaFormatted.indexOf('@') !== 0 && instaFormatted.indexOf('http') !== 0) {
-            instaFormatted = '@' + instaFormatted;
-          }
+          var instaInfo = parseInstagramInfo(r.instagram);
+          rowInstaInfos.push(instaInfo);
+          var instaFormatted = instaInfo ? instaInfo.handle : '-';
           return [
             String(r.rowNum),
             r.nomeExibicao,
@@ -3042,14 +3082,14 @@
             cellPadding: { top: 3.4, right: 3, bottom: 3.4, left: 3.2 }
           },
           columnStyles: {
-            0: { halign: 'center', cellWidth: 11, textColor: [75, 75, 75] },
-            1: { cellWidth: 54, cellPadding: { top: 3.2, right: 3, bottom: 3.2, left: 5 } },
-            2: { cellWidth: 43, fontStyle: 'bold' },
-            3: { cellWidth: 35 },
-            4: { cellWidth: 47 },
-            5: { halign: 'center', cellWidth: 18 },
-            6: { cellWidth: 33 },
-            7: { cellWidth: 28 }
+            0: { halign: 'center', cellWidth: 10, textColor: [75, 75, 75] },
+            1: { cellWidth: 50, cellPadding: { top: 3.2, right: 3, bottom: 3.2, left: 5 } },
+            2: { cellWidth: 41, fontStyle: 'bold' },
+            3: { cellWidth: 33 },
+            4: { cellWidth: 44 },
+            5: { halign: 'center', cellWidth: 16 },
+            6: { cellWidth: 33, overflow: 'ellipsize' },
+            7: { cellWidth: 42, overflow: 'ellipsize', cellPadding: { top: 3.2, right: 2.2, bottom: 3.2, left: 2.5 } }
           },
           didParseCell: function (data) {
             if (data.section === 'head' && (data.column.index === 0 || data.column.index === 5)) {
@@ -3068,6 +3108,28 @@
                 data.cell.styles.fontStyle = 'bold';
                 data.cell.styles.fontSize = theme.relFontSize;
               }
+
+              // Column 7: "Instagram" — guarantee zero line breaks + style as clickable link when present
+              if (data.column.index === 7) {
+                var instaInfo = rowInstaInfos[rowIdx];
+                if (instaInfo) {
+                  var handleText = instaInfo.handle;
+                  // Force single line in cell.text and dynamically scale font size if username is very long
+                  data.cell.text = [handleText];
+                  var len = handleText.length;
+                  if (len > 26) {
+                    data.cell.styles.fontSize = 6.5;
+                  } else if (len > 22) {
+                    data.cell.styles.fontSize = 7.2;
+                  } else if (len > 18) {
+                    data.cell.styles.fontSize = 8.0;
+                  } else {
+                    data.cell.styles.fontSize = 8.6;
+                  }
+                  data.cell.styles.textColor = [30, 64, 175]; // Subtle link blue (#1e40af)
+                  data.cell.styles.fontStyle = 'bold';
+                }
+              }
             }
           },
           didDrawCell: function (data) {
@@ -3079,6 +3141,16 @@
               var theme = getPdfRowTheme(rObj);
               doc.setFillColor(theme.strip[0], theme.strip[1], theme.strip[2]);
               doc.rect(data.cell.x, data.cell.y, 2.3, data.cell.height, 'F');
+            }
+
+            // Add interactive PDF hyperlink over the entire Instagram cell so tapping it opens the Instagram app
+            if (data.section === 'body' && data.column.index === 7) {
+              var instaInfoLink = rowInstaInfos[data.row.index];
+              if (instaInfoLink && instaInfoLink.url) {
+                doc.link(data.cell.x, data.cell.y, data.cell.width, data.cell.height, {
+                  url: instaInfoLink.url
+                });
+              }
             }
           }
         });
