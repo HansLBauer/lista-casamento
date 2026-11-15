@@ -392,15 +392,15 @@
             <span class="text-[11px] font-bold tracking-wider uppercase text-[#3f5830] nowrap-strict">Por Lado (Laís / Hans)</span>
           </div>
           <div class="space-y-1 text-xs">
-            <div class="flex items-center justify-between px-2 py-0.5 rounded bg-[#fdf2f8] text-[#831843] nowrap-strict">
+            <div class="flex items-center justify-between px-2 py-0.5 rounded bg-[#fdf4f6] text-[#944258] border-l-4 border-[#f2aebe] nowrap-strict">
               <span class="font-medium">Laís:</span>
               <strong id="stat-lado-lais">0</strong>
             </div>
-            <div class="flex items-center justify-between px-2 py-0.5 rounded bg-[#eff6ff] text-[#1e3a8a] nowrap-strict">
+            <div class="flex items-center justify-between px-2 py-0.5 rounded bg-[#f2f7fd] text-[#3b628a] border-l-4 border-[#9ec5e8] nowrap-strict">
               <span class="font-medium">Hans:</span>
               <strong id="stat-lado-hans">0</strong>
             </div>
-            <div class="flex items-center justify-between px-2 py-0.5 rounded bg-[#f3f4f6] text-[#374151] nowrap-strict">
+            <div class="flex items-center justify-between px-2 py-0.5 rounded bg-[#f0f9f4] text-[#3d6b52] border-l-4 border-[#a3d1b6] nowrap-strict">
               <span class="font-medium">Ambos / Outros:</span>
               <strong id="stat-lado-ambos">0</strong>
             </div>
@@ -411,18 +411,18 @@
         <div class="kpi-card sunflower">
           <div class="flex items-center justify-between gap-1 mb-1">
             <span class="text-[10px] font-bold tracking-tight uppercase text-[#854d0e] nowrap-strict">🌻 Padrinhos e Madrinhas</span>
-            <strong id="stat-padrinhos-total" class="text-xs font-bold text-[#854d0e] bg-[#fef3c7] px-2 py-0.5 rounded-full border border-[#f59e0b] nowrap-strict">0</strong>
+            <strong id="stat-padrinhos-total" class="text-xs font-bold text-[#8c6222] bg-[#fefaee] px-2 py-0.5 rounded-full border border-[#f3ce85] nowrap-strict">0</strong>
           </div>
           <div class="space-y-1 text-[10px]">
-            <div class="flex items-center justify-between gap-1 px-1.5 py-0.5 rounded bg-[#fdf2f8] text-[#831843] nowrap-strict">
+            <div class="flex items-center justify-between gap-1 px-1.5 py-0.5 rounded bg-[#fdf4f6] text-[#944258] border-l-4 border-[#f2aebe] nowrap-strict">
               <span class="font-bold shrink-0">Laís:</span>
               <span id="stat-padrinhos-lais" class="font-medium nowrap-strict">0 padrinhos • 0 madrinhas</span>
             </div>
-            <div class="flex items-center justify-between gap-1 px-1.5 py-0.5 rounded bg-[#eff6ff] text-[#1e3a8a] nowrap-strict">
+            <div class="flex items-center justify-between gap-1 px-1.5 py-0.5 rounded bg-[#f2f7fd] text-[#3b628a] border-l-4 border-[#9ec5e8] nowrap-strict">
               <span class="font-bold shrink-0">Hans:</span>
               <span id="stat-padrinhos-hans" class="font-medium nowrap-strict">0 padrinhos • 0 madrinhas</span>
             </div>
-            <div class="flex items-center justify-between gap-1 px-1.5 py-0.5 rounded bg-[#f3f4f6] text-[#374151] nowrap-strict">
+            <div class="flex items-center justify-between gap-1 px-1.5 py-0.5 rounded bg-[#f0f9f4] text-[#3d6b52] border-l-4 border-[#a3d1b6] nowrap-strict">
               <span class="font-bold shrink-0">Ambos:</span>
               <span id="stat-padrinhos-ambos" class="font-medium nowrap-strict">0 padrinhos • 0 madrinhas</span>
             </div>
@@ -1804,18 +1804,22 @@
           var isBeingEdited = editingGroupId && r.groupId === editingGroupId;
           tr.className = (isTitular ? 'row-titular ' : 'row-dependent ') + (isBeingEdited ? 'row-editing' : '');
 
-          // Role badge styling
-          var roleBadgeClass = 'bg-[#eef2e6] text-[#324626] border border-[#cad9b8]';
+          var rowTheme = getPdfRowTheme(r);
+
+          // Role badge styling (soft pastel)
+          var roleBadgeClass = 'bg-[#f2f6ee] text-[#455a3b] border border-[#d6e2ca]';
           if (r.roleCode === 'ACOMPANHANTE') {
-            roleBadgeClass = 'bg-[#e0f2fe] text-[#075985] border border-[#bae6fd]';
+            roleBadgeClass = 'bg-[#f3f6f3] text-[#4e6353] border border-[#d2dcd4]';
+          } else if (r.roleCode === 'CRIANCA_ACOMPANHANTE') {
+            roleBadgeClass = 'bg-[#f8f5fd] text-[#6d4c94] border border-[#dfd1f0]';
           } else if (r.roleCode.indexOf('CRIANCA') === 0) {
-            roleBadgeClass = 'bg-[#fef9c3] text-[#854d0e] border border-[#fde047]';
+            roleBadgeClass = 'bg-[#fefaee] text-[#8c6222] border border-[#f5dfb0]';
           }
 
-          // Padrinho/Madrinha badge (never abbreviated!)
+          // Padrinho/Madrinha badge (never abbreviated, soft pastel buttercup)
           var padrinhoHtml = '<span class="text-xs text-[#6e7a62]">Não</span>';
           if (r.padrinho && r.padrinho !== 'Não') {
-            padrinhoHtml = '<span class="badge-pill bg-[#fef3c7] text-[#92400e] border border-[#f59e0b]">🌻 ' + escapeHtml(r.padrinho) + '</span>';
+            padrinhoHtml = '<span class="badge-pill bg-[#fefaee] text-[#8c6222] border border-[#f3ce85]">🌻 ' + escapeHtml(r.padrinho) + '</span>';
           }
 
           // Age / Classification badge
@@ -1870,11 +1874,12 @@
                 : '') +
             '</div>';
 
+          var relDisplay = r.pdfRelacao || r.relacao;
           tr.innerHTML =
-            '<td class="text-center font-bold text-[#506528]">' + r.rowNum + '</td>' +
-            '<td>' +
+            '<td class="text-center font-bold text-[#5d7252]">' + r.rowNum + '</td>' +
+            '<td style="border-left: 5px solid ' + rowTheme.stripHex + ';">' +
               '<div class="flex items-center gap-2 nowrap-strict">' +
-                '<span class="' + (isTitular ? 'font-bold text-[#1f291c]' : 'font-medium text-[#374151] pl-3') + '">' +
+                '<span class="' + (isTitular ? 'font-bold text-[#1f291c]' : 'font-medium text-[#374151] pl-2') + '">' +
                   escapeHtml(r.nomeExibicao) +
                 '</span>' +
                 (isBeingEdited ? '<span class="badge-pill bg-[#eab308] text-white">Editando</span>' : '') +
@@ -1883,7 +1888,11 @@
             '<td>' +
               '<span class="badge-pill ' + roleBadgeClass + '">' + escapeHtml(r.indicadorVinculo) + '</span>' +
             '</td>' +
-            '<td><span class="badge-pill bg-[#f4f1e6] text-[#324626] border border-[#ded8c4]">' + escapeHtml(r.relacao) + '</span></td>' +
+            '<td style="background-color: ' + rowTheme.relBgHex + ';">' +
+              '<span class="badge-pill" style="background-color: ' + rowTheme.relBgHex + '; color: ' + rowTheme.relTextHex + '; border: 1px solid ' + rowTheme.relBorder + ';">' +
+                escapeHtml(relDisplay) +
+              '</span>' +
+            '</td>' +
             '<td class="font-medium text-[#24331b]">' + escapeHtml(r.cidade) + '</td>' +
             '<td>' + padrinhoHtml + '</td>' +
             '<td>' + ageBadgeHtml + '</td>' +
@@ -2641,62 +2650,90 @@
         }
       }
 
-      // --- EXPORT PERFECTLY FORMATTED PDF MATCHING COLOR-CODED VISUAL MODEL ---
+      // --- UNIFIED PASTEL COLOR PALETTE FOR BOTH WEB APP & PDF ---
       function getPdfRowTheme(rObj) {
         if (!rObj) {
           return {
-            strip: [16, 185, 129],
-            relBg: [236, 253, 245],
-            relText: [6, 95, 70],
+            strip: [163, 209, 182],    // Soft Pastel Mint-Sage (#a3d1b6)
+            relBg: [240, 249, 244],    // #f0f9f4
+            relText: [61, 107, 82],    // #3d6b52
+            relBorder: '#c6e4d2',
+            stripHex: '#a3d1b6',
+            relBgHex: '#f0f9f4',
+            relTextHex: '#3d6b52',
             relFontSize: 8.5
           };
         }
         var rel = String(rObj.pdfRelacao || rObj.relacao || '');
         if (rel === 'Criança de convidado') {
           return {
-            strip: [245, 158, 11],     // Amber/Yellow vertical bar
-            relBg: [254, 247, 230],    // Soft warm cream-yellow cell
-            relText: [120, 53, 15],    // Warm brown-amber bold text
+            strip: [243, 206, 133],    // Soft Pastel Buttercup/Champagne (#f3ce85)
+            relBg: [254, 250, 238],    // #fefaee
+            relText: [140, 98, 34],    // #8c6222
+            relBorder: '#f5dfb0',
+            stripHex: '#f3ce85',
+            relBgHex: '#fefaee',
+            relTextHex: '#8c6222',
             relFontSize: 8.5
           };
         }
         if (rel === 'Criança de acompanhante') {
           return {
-            strip: [168, 85, 247],     // Purple vertical bar
-            relBg: [246, 240, 254],    // Soft lavender cell
-            relText: [107, 33, 168],   // Deep purple bold text
+            strip: [203, 180, 227],    // Soft Pastel Lilac/Lavender (#cbb4e3)
+            relBg: [248, 245, 253],    // #f8f5fd
+            relText: [109, 76, 148],   // #6d4c94
+            relBorder: '#dfd1f0',
+            stripHex: '#cbb4e3',
+            relBgHex: '#f8f5fd',
+            relTextHex: '#6d4c94',
             relFontSize: 7.5
           };
         }
         if (rel === 'Acompanhante de convidado') {
           return {
-            strip: [82, 110, 90],      // Muted slate-olive vertical bar
-            relBg: [237, 241, 237],    // Soft sage-gray cell
-            relText: [55, 75, 60],     // Dark slate-olive bold text
+            strip: [178, 194, 181],    // Soft Pastel Eucalyptus/Sage (#b2c2b5)
+            relBg: [243, 246, 243],    // #f3f6f3
+            relText: [78, 99, 83],     // #4e6353
+            relBorder: '#d2dcd4',
+            stripHex: '#b2c2b5',
+            relBgHex: '#f3f6f3',
+            relTextHex: '#4e6353',
             relFontSize: 7.4
           };
         }
         if (rel.indexOf('Hans') !== -1) {
           return {
-            strip: [59, 130, 246],     // Blue vertical bar
-            relBg: [239, 246, 255],    // Soft light-blue cell
-            relText: [30, 58, 138],    // Navy blue bold text
+            strip: [158, 197, 232],    // Soft Pastel Baby/Sky Blue (#9ec5e8)
+            relBg: [242, 247, 253],    // #f2f7fd
+            relText: [59, 98, 138],    // #3b628a
+            relBorder: '#c9dff4',
+            stripHex: '#9ec5e8',
+            relBgHex: '#f2f7fd',
+            relTextHex: '#3b628a',
             relFontSize: 8.5
           };
         }
         if (rel.indexOf('Laís') !== -1 || rel.indexOf('Lais') !== -1) {
           return {
-            strip: [244, 63, 94],      // Rose/Pink vertical bar
-            relBg: [253, 242, 248],    // Soft rose-pink cell
-            relText: [136, 19, 55],    // Burgundy-rose bold text
+            strip: [242, 174, 190],    // Soft Pastel Blush Rose (#f2aebe)
+            relBg: [253, 244, 246],    // #fdf4f6
+            relText: [148, 66, 88],    // #944258
+            relBorder: '#f7ced8',
+            stripHex: '#f2aebe',
+            relBgHex: '#fdf4f6',
+            relTextHex: '#944258',
             relFontSize: 8.5
           };
         }
         // Default: Amigo de ambos / Conhecido de ambos / Outros
         return {
-          strip: [16, 185, 129],       // Mint-emerald green vertical bar
-          relBg: [234, 248, 240],      // Soft mint green cell
-          relText: [6, 95, 70],        // Deep emerald green bold text
+          strip: [163, 209, 182],      // Soft Pastel Mint-Sage (#a3d1b6)
+          relBg: [240, 249, 244],      // #f0f9f4
+          relText: [61, 107, 82],      // #3d6b52
+          relBorder: '#c6e4d2',
+          stripHex: '#a3d1b6',
+          relBgHex: '#f0f9f4',
+          relTextHex: '#3d6b52',
           relFontSize: 8.5
         };
       }
@@ -2717,8 +2754,8 @@
         var stats = computeMetrics(guestGroups);
         var rows = expandGroupsToRows(guestGroups);
 
-        // Helper to draw a high-DPI proportional floral arrangement (sunflowers, white ranunculus/roses & olive leaves)
-        // for the right side of the olive green PDF header banner without any aspect-ratio distortion
+        // Helper to draw a high-DPI watercolor-inspired pastel botanical bouquet
+        // (ivory/blush ranunculus, English garden roses, pastel buttercup sunflowers, silver-sage eucalyptus & baby's breath)
         function createHeaderFloralDataUrl() {
           var canvas = document.createElement('canvas');
           // Exact 3.5 : 1 aspect ratio -> placed at 84mm x 24mm (100% locked 1:1 scale, zero stretching)
@@ -2727,224 +2764,311 @@
           var ctx = canvas.getContext('2d');
           if (!ctx) return null;
 
-          // Subtle golden-glow aura on the right
-          var glow = ctx.createRadialGradient(690, 120, 10, 690, 120, 220);
-          glow.addColorStop(0, 'rgba(250, 204, 21, 0.14)');
-          glow.addColorStop(1, 'rgba(50, 70, 38, 0)');
+          // Soft dreamy champagne-ivory aura on the right
+          var glow = ctx.createRadialGradient(650, 120, 15, 650, 120, 260);
+          glow.addColorStop(0, 'rgba(255, 250, 240, 0.22)');
+          glow.addColorStop(0.55, 'rgba(243, 206, 133, 0.10)');
+          glow.addColorStop(1, 'rgba(92, 118, 88, 0)');
           ctx.fillStyle = glow;
           ctx.fillRect(0, 0, 840, 240);
 
-          // Draw delicate golden botanical stems curving from right to left
+          // Delicate organic curving stems
           function drawStem(x1, y1, cx, cy, x2, y2, width, color) {
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.quadraticCurveTo(cx, cy, x2, y2);
-            ctx.strokeStyle = color || '#b89742';
-            ctx.lineWidth = width || 2.5;
+            ctx.strokeStyle = color || 'rgba(218, 203, 168, 0.75)';
+            ctx.lineWidth = width || 2.2;
             ctx.lineCap = 'round';
             ctx.stroke();
             ctx.restore();
           }
 
-          // Draw an olive / eucalyptus leaf with central vein
-          function drawLeaf(x, y, angleDeg, len, wid, fillCol, veinCol) {
+          // Soft watercolor silver-dollar eucalyptus & pastel sage leaf
+          function drawPastelLeaf(x, y, angleDeg, len, wid, cStart, cEnd) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate((angleDeg * Math.PI) / 180);
+            ctx.shadowColor = 'rgba(30, 45, 28, 0.16)';
+            ctx.shadowBlur = 5;
+            ctx.shadowOffsetY = 2;
+
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.bezierCurveTo(len * 0.28, -wid * 1.05, len * 0.75, -wid * 0.85, len, 0);
+            ctx.bezierCurveTo(len * 0.75, wid * 0.85, len * 0.28, wid * 1.05, 0, 0);
+            ctx.closePath();
+
+            var g = ctx.createLinearGradient(0, -wid, len, wid);
+            g.addColorStop(0, cStart || '#a3bfa8');
+            g.addColorStop(1, cEnd || '#cde0cf');
+            ctx.fillStyle = g;
+            ctx.fill();
+
+            ctx.shadowColor = 'transparent';
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.42)';
+            ctx.lineWidth = 0.9;
+            ctx.stroke();
+
+            // Delicate center midrib vein
+            ctx.beginPath();
+            ctx.moveTo(3, 0);
+            ctx.quadraticCurveTo(len * 0.5, -1.2, len * 0.86, 0);
+            ctx.strokeStyle = 'rgba(255, 252, 245, 0.55)';
+            ctx.lineWidth = 0.9;
+            ctx.stroke();
+            ctx.restore();
+          }
+
+          // Round eucalyptus coin leaf
+          function drawEucalyptusCoin(x, y, r, angleDeg, col1, col2) {
             ctx.save();
             ctx.translate(x, y);
             ctx.rotate((angleDeg * Math.PI) / 180);
             ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.quadraticCurveTo(len * 0.5, -wid, len, 0);
-            ctx.quadraticCurveTo(len * 0.5, wid, 0, 0);
-            ctx.closePath();
-            ctx.fillStyle = fillCol || '#6f8c4a';
+            ctx.ellipse(0, 0, r * 1.15, r * 0.88, 0, 0, Math.PI * 2);
+            var g = ctx.createRadialGradient(-r * 0.3, -r * 0.3, 2, 0, 0, r * 1.2);
+            g.addColorStop(0, col1 || '#d4e4d8');
+            g.addColorStop(1, col2 || '#9bb8a3');
+            ctx.fillStyle = g;
             ctx.fill();
-            ctx.strokeStyle = 'rgba(254, 243, 199, 0.35)';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.moveTo(2, 0);
-            ctx.lineTo(len * 0.86, 0);
-            ctx.strokeStyle = veinCol || 'rgba(254, 243, 199, 0.45)';
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.38)';
+            ctx.lineWidth = 0.8;
             ctx.stroke();
             ctx.restore();
           }
 
-          // Draw a detailed botanical sunflower (Girassol)
-          function drawSunflower(cx, cy, radius) {
+          // Layered Watercolor Garden Ranunculus / Peony Rose (in Ivory-Cream or Soft Blush-Rose)
+          function drawPastelRanunculus(cx, cy, radius, palette) {
             ctx.save();
             ctx.translate(cx, cy);
+            ctx.shadowColor = 'rgba(25, 40, 25, 0.22)';
+            ctx.shadowBlur = 7;
+            ctx.shadowOffsetY = 2.5;
 
-            // Soft drop shadow
-            ctx.shadowColor = 'rgba(15, 25, 10, 0.38)';
-            ctx.shadowBlur = 8;
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 3;
-
-            // Back layer of petals (20 petals, warm amber-gold)
-            var backPetals = 20;
-            for (var i = 0; i < backPetals; i++) {
-              ctx.save();
-              ctx.rotate((i * 2 * Math.PI) / backPetals);
-              ctx.beginPath();
-              ctx.moveTo(radius * 0.25, 0);
-              ctx.quadraticCurveTo(radius * 0.72, -radius * 0.22, radius * 1.05, 0);
-              ctx.quadraticCurveTo(radius * 0.72, radius * 0.22, radius * 0.25, 0);
-              ctx.closePath();
-              var gradB = ctx.createLinearGradient(radius * 0.25, 0, radius * 1.05, 0);
-              gradB.addColorStop(0, '#d97706');
-              gradB.addColorStop(0.55, '#f59e0b');
-              gradB.addColorStop(1, '#fbbf24');
-              ctx.fillStyle = gradB;
-              ctx.fill();
-              ctx.restore();
-            }
-
-            ctx.shadowColor = 'transparent';
-
-            // Front layer of petals (20 offset petals, bright golden yellow)
-            for (var j = 0; j < backPetals; j++) {
-              ctx.save();
-              ctx.rotate(((j + 0.5) * 2 * Math.PI) / backPetals);
-              ctx.beginPath();
-              ctx.moveTo(radius * 0.24, 0);
-              ctx.quadraticCurveTo(radius * 0.68, -radius * 0.18, radius * 0.98, 0);
-              ctx.quadraticCurveTo(radius * 0.68, radius * 0.18, radius * 0.24, 0);
-              ctx.closePath();
-              var gradF = ctx.createLinearGradient(radius * 0.24, 0, radius * 0.98, 0);
-              gradF.addColorStop(0, '#eab308');
-              gradF.addColorStop(0.6, '#facc15');
-              gradF.addColorStop(1, '#fef08a');
-              ctx.fillStyle = gradF;
-              ctx.fill();
-              ctx.strokeStyle = 'rgba(180, 83, 9, 0.25)';
-              ctx.lineWidth = 0.8;
-              ctx.stroke();
-              ctx.restore();
-            }
-
-            // Center dark brown disc
-            var discR = radius * 0.36;
-            var discGrad = ctx.createRadialGradient(0, 0, discR * 0.1, 0, 0, discR);
-            discGrad.addColorStop(0, '#3b1d0a');
-            discGrad.addColorStop(0.7, '#5c2d0e');
-            discGrad.addColorStop(1, '#92400e');
-            ctx.beginPath();
-            ctx.arc(0, 0, discR, 0, Math.PI * 2);
-            ctx.fillStyle = discGrad;
-            ctx.fill();
-
-            // Golden pollen ring & seed texture dots
-            for (var d = 0; d < 28; d++) {
-              var ang = (d * 137.5 * Math.PI) / 180;
-              var rDot = Math.sqrt(d / 28) * (discR * 0.85);
-              ctx.beginPath();
-              ctx.arc(Math.cos(ang) * rDot, Math.sin(ang) * rDot, 1.3, 0, Math.PI * 2);
-              ctx.fillStyle = d > 16 ? '#fbbf24' : '#b45309';
-              ctx.fill();
-            }
-
-            ctx.restore();
-          }
-
-          // Draw a delicate white/cream ranunculus / rose blossom
-          function drawWhiteBlossom(cx, cy, radius) {
-            ctx.save();
-            ctx.translate(cx, cy);
-            ctx.shadowColor = 'rgba(15, 25, 10, 0.32)';
-            ctx.shadowBlur = 6;
-            ctx.shadowOffsetY = 2;
-
-            var rings = [
-              { count: 10, rOut: radius, rIn: radius * 0.3, col1: '#f5f0e1', col2: '#ffffff' },
-              { count: 8, rOut: radius * 0.72, rIn: radius * 0.2, col1: '#ede4cc', col2: '#fffdf7' },
-              { count: 6, rOut: radius * 0.46, rIn: radius * 0.1, col1: '#e6d8b5', col2: '#faf5e6' }
+            var layers = [
+              { count: 11, dist: radius * 0.52, rx: radius * 0.50, ry: radius * 0.38, cIn: palette.outerIn, cOut: palette.outerOut },
+              { count: 9,  dist: radius * 0.38, rx: radius * 0.40, ry: radius * 0.31, cIn: palette.midIn,   cOut: palette.midOut },
+              { count: 7,  dist: radius * 0.24, rx: radius * 0.30, ry: radius * 0.24, cIn: palette.innerIn, cOut: palette.innerOut },
+              { count: 5,  dist: radius * 0.12, rx: radius * 0.20, ry: radius * 0.16, cIn: palette.coreIn,  cOut: palette.coreOut }
             ];
 
-            rings.forEach(function (ring, idx) {
-              for (var i = 0; i < ring.count; i++) {
+            layers.forEach(function (layer, lIdx) {
+              for (var i = 0; i < layer.count; i++) {
                 ctx.save();
-                ctx.rotate(((i + idx * 0.35) * 2 * Math.PI) / ring.count);
+                var ang = ((i + lIdx * 0.42) * 2 * Math.PI) / layer.count;
+                ctx.rotate(ang);
                 ctx.beginPath();
-                ctx.arc(ring.rOut * 0.52, 0, ring.rOut * 0.46, 0, Math.PI * 2);
-                var g = ctx.createRadialGradient(ring.rOut * 0.5, 0, 1, ring.rOut * 0.5, 0, ring.rOut * 0.5);
-                g.addColorStop(0, ring.col1);
-                g.addColorStop(1, ring.col2);
-                ctx.fillStyle = g;
+                ctx.ellipse(layer.dist, 0, layer.rx, layer.ry, 0.18, 0, Math.PI * 2);
+                var pg = ctx.createRadialGradient(layer.dist * 0.6, 0, 1, layer.dist, 0, layer.rx * 1.1);
+                pg.addColorStop(0, layer.cIn);
+                pg.addColorStop(1, layer.cOut);
+                ctx.fillStyle = pg;
                 ctx.fill();
-                ctx.strokeStyle = 'rgba(180, 165, 130, 0.35)';
-                ctx.lineWidth = 0.8;
+                ctx.strokeStyle = palette.stroke;
+                ctx.lineWidth = 0.7;
                 ctx.stroke();
                 ctx.restore();
               }
               ctx.shadowColor = 'transparent';
             });
 
-            // Warm golden-olive bud center
+            // Soft pastel golden-sage stamen center
+            var cg = ctx.createRadialGradient(0, 0, 1, 0, 0, radius * 0.16);
+            cg.addColorStop(0, '#e9d8a6');
+            cg.addColorStop(1, '#cbb87c');
             ctx.beginPath();
-            ctx.arc(0, 0, radius * 0.18, 0, Math.PI * 2);
-            ctx.fillStyle = '#d4a74a';
+            ctx.arc(0, 0, radius * 0.15, 0, Math.PI * 2);
+            ctx.fillStyle = cg;
             ctx.fill();
             ctx.restore();
           }
 
-          // Draw small golden-white floral buds / baby's breath (gipsófila)
-          function drawBudCluster(x, y) {
-            var offsets = [[0, 0, 4.5], [-10, -7, 3.5], [9, -6, 3.2], [-6, 8, 3.2], [11, 6, 3.8]];
-            offsets.forEach(function (o) {
+          // Pastel Champagne-Buttercup Sunflower (Girassol Pastel Suave)
+          function drawPastelSunflower(cx, cy, radius) {
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.shadowColor = 'rgba(25, 40, 25, 0.22)';
+            ctx.shadowBlur = 7;
+            ctx.shadowOffsetY = 2.5;
+
+            var numPetals = 22;
+            // Back layer of soft pastel honey-cream petals
+            for (var i = 0; i < numPetals; i++) {
+              ctx.save();
+              ctx.rotate((i * 2 * Math.PI) / numPetals);
               ctx.beginPath();
-              ctx.arc(x + o[0], y + o[1], o[2], 0, Math.PI * 2);
-              ctx.fillStyle = '#fef9c3';
+              ctx.moveTo(radius * 0.24, 0);
+              ctx.bezierCurveTo(radius * 0.55, -radius * 0.19, radius * 0.88, -radius * 0.14, radius * 1.04, 0);
+              ctx.bezierCurveTo(radius * 0.88, radius * 0.14, radius * 0.55, radius * 0.19, radius * 0.24, 0);
+              ctx.closePath();
+              var gBack = ctx.createLinearGradient(radius * 0.24, 0, radius * 1.04, 0);
+              gBack.addColorStop(0, '#e8bc66');
+              gBack.addColorStop(0.55, '#f6d88c');
+              gBack.addColorStop(1, '#fef3c7');
+              ctx.fillStyle = gBack;
               ctx.fill();
-              ctx.strokeStyle = '#ca8a04';
-              ctx.lineWidth = 0.9;
+              ctx.restore();
+            }
+
+            ctx.shadowColor = 'transparent';
+
+            // Front layer of delicate pastel lemon-vanilla petals
+            for (var j = 0; j < numPetals; j++) {
+              ctx.save();
+              ctx.rotate(((j + 0.5) * 2 * Math.PI) / numPetals);
+              ctx.beginPath();
+              ctx.moveTo(radius * 0.22, 0);
+              ctx.bezierCurveTo(radius * 0.52, -radius * 0.16, radius * 0.82, -radius * 0.12, radius * 0.96, 0);
+              ctx.bezierCurveTo(radius * 0.82, radius * 0.12, radius * 0.52, radius * 0.16, radius * 0.22, 0);
+              ctx.closePath();
+              var gFront = ctx.createLinearGradient(radius * 0.22, 0, radius * 0.96, 0);
+              gFront.addColorStop(0, '#f0ca78');
+              gFront.addColorStop(0.6, '#fbe5a7');
+              gFront.addColorStop(1, '#fffbeb');
+              ctx.fillStyle = gFront;
+              ctx.fill();
+              ctx.strokeStyle = 'rgba(217, 168, 78, 0.32)';
+              ctx.lineWidth = 0.7;
               ctx.stroke();
-            });
+              ctx.restore();
+            }
+
+            // Soft warm cinnamon-taupe pastel center disc
+            var discR = radius * 0.32;
+            var discG = ctx.createRadialGradient(-discR * 0.2, -discR * 0.2, 1, 0, 0, discR);
+            discG.addColorStop(0, '#8c6747');
+            discG.addColorStop(0.65, '#6e4f35');
+            discG.addColorStop(1, '#a67c52');
+            ctx.beginPath();
+            ctx.arc(0, 0, discR, 0, Math.PI * 2);
+            ctx.fillStyle = discG;
+            ctx.fill();
+
+            // Delicate pastel gold pollen ring
+            for (var d = 0; d < 26; d++) {
+              var ang = (d * 137.5 * Math.PI) / 180;
+              var rDot = Math.sqrt(d / 26) * (discR * 0.84);
+              ctx.beginPath();
+              ctx.arc(Math.cos(ang) * rDot, Math.sin(ang) * rDot, 1.25, 0, Math.PI * 2);
+              ctx.fillStyle = d > 14 ? '#fde68a' : '#c79c5e';
+              ctx.fill();
+            }
+            ctx.restore();
           }
 
-          // 1. Stems & foliage sprays
-          drawStem(820, 195, 620, 150, 380, 125, 3, '#a38948');
-          drawStem(810, 55, 650, 95, 470, 72, 2.5, '#a38948');
-          drawStem(780, 120, 660, 180, 520, 195, 2.2, '#8fa365');
+          // Delicate Gypsophila (Mosquitinho / Baby's Breath) & Pearl Buds
+          function drawGypsophilaSpray(x, y, angleDeg) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate((angleDeg * Math.PI) / 180);
+            var twigs = [
+              [0, 0, -24, -14],
+              [0, 0, -32, 4],
+              [-14, -8, -36, -18],
+              [-18, 2, -40, 12]
+            ];
+            twigs.forEach(function (t) {
+              ctx.beginPath();
+              ctx.moveTo(t[0], t[1]);
+              ctx.lineTo(t[2], t[3]);
+              ctx.strokeStyle = 'rgba(230, 224, 205, 0.65)';
+              ctx.lineWidth = 1.1;
+              ctx.stroke();
+            });
+            var blossoms = [
+              [-24, -14, 4.2, '#fffdf9'],
+              [-36, -18, 3.6, '#fdf4f6'],
+              [-32, 4, 4.0, '#fffdf9'],
+              [-40, 12, 3.4, '#fef9c3'],
+              [-16, -16, 3.2, '#fffdf9'],
+              [-22, 11, 3.5, '#fdf4f6']
+            ];
+            blossoms.forEach(function (b) {
+              ctx.beginPath();
+              ctx.arc(b[0], b[1], b[2], 0, Math.PI * 2);
+              ctx.fillStyle = b[3];
+              ctx.fill();
+              ctx.strokeStyle = 'rgba(210, 195, 165, 0.5)';
+              ctx.lineWidth = 0.7;
+              ctx.stroke();
+            });
+            ctx.restore();
+          }
 
-          // 2. Olive & eucalyptus leaves
-          drawLeaf(430, 125, -165, 58, 15, '#658042');
-          drawLeaf(485, 110, -140, 52, 14, '#7c9656');
-          drawLeaf(510, 142, 160, 55, 15, '#587238');
-          drawLeaf(545, 78, -145, 62, 16, '#7c9656');
-          drawLeaf(605, 62, -120, 56, 15, '#658042');
-          drawLeaf(585, 178, 145, 60, 16, '#658042');
-          drawLeaf(645, 192, 125, 52, 14, '#7c9656');
-          drawLeaf(735, 52, -65, 62, 16, '#658042');
-          drawLeaf(775, 78, -35, 58, 15, '#7c9656');
-          drawLeaf(765, 175, 45, 60, 15, '#587238');
-          drawLeaf(800, 145, 20, 52, 14, '#7c9656');
-          drawLeaf(670, 48, -100, 48, 13, '#849e5e');
+          var ivoryPalette = {
+            outerIn: '#f3ece0', outerOut: '#ffffff',
+            midIn:   '#efe5d4', midOut:   '#fffdf9',
+            innerIn: '#e9dbc3', innerOut: '#faf5eb',
+            coreIn:  '#e2cfa9', coreOut:  '#f7EFE0',
+            stroke:  'rgba(200, 185, 155, 0.35)'
+          };
 
-          // 3. Baby's breath / golden-white buds
-          drawBudCluster(415, 118);
-          drawBudCluster(515, 66);
-          drawBudCluster(555, 192);
-          drawBudCluster(795, 108);
+          var blushPalette = {
+            outerIn: '#f7d6df', outerOut: '#fdf4f6',
+            midIn:   '#f3c3cf', midOut:   '#fcebf0',
+            innerIn: '#eeb0c0', innerOut: '#fae1e8',
+            coreIn:  '#e59db0', coreOut:  '#f7d4de',
+            stroke:  'rgba(215, 155, 172, 0.35)'
+          };
 
-          // 4. White ranunculus / roses & Sunflowers (proportionally scaled circles)
-          drawWhiteBlossom(548, 138, 28);
-          drawWhiteBlossom(748, 148, 25);
-          drawSunflower(622, 102, 42);
-          drawSunflower(718, 92, 33);
-          drawWhiteBlossom(668, 162, 24);
-          drawSunflower(685, 124, 52);
+          var peachChampagnePalette = {
+            outerIn: '#f7e3ce', outerOut: '#fff9f2',
+            midIn:   '#f3d5b8', midOut:   '#fef4e8',
+            innerIn: '#ecc5a0', innerOut: '#fcf0e1',
+            coreIn:  '#e3b589', coreOut:  '#f9e7d2',
+            stroke:  'rgba(210, 175, 140, 0.35)'
+          };
+
+          // 1. Flowing botanical stems across the right side
+          drawStem(830, 195, 620, 150, 355, 122, 2.4, 'rgba(218, 206, 176, 0.75)');
+          drawStem(820, 48, 650, 88, 435, 68, 2.0, 'rgba(218, 206, 176, 0.70)');
+          drawStem(790, 128, 655, 182, 485, 196, 1.9, 'rgba(195, 214, 196, 0.75)');
+
+          // 2. Dusty silver-sage & pastel eucalyptus leaves
+          drawPastelLeaf(395, 122, -168, 56, 15, '#9ab89e', '#cce0ce');
+          drawPastelLeaf(455, 102, -142, 52, 14, '#acc7b0', '#d8eadb');
+          drawPastelLeaf(478, 146, 158, 54, 15, '#8faea3', '#bed6cc');
+          drawPastelLeaf(515, 72, -148, 60, 16, '#a3bfa8', '#d2e4d5');
+          drawPastelLeaf(585, 52, -118, 55, 15, '#94b499', '#c5dcc9');
+          drawPastelLeaf(560, 184, 148, 58, 16, '#a3bfa8', '#d2e4d5');
+          drawPastelLeaf(632, 198, 122, 52, 14, '#8faea3', '#bed6cc');
+          drawPastelLeaf(730, 46, -62, 60, 16, '#a3bfa8', '#d2e4d5');
+          drawPastelLeaf(778, 72, -32, 56, 15, '#94b499', '#c5dcc9');
+          drawPastelLeaf(768, 182, 42, 58, 15, '#9ab89e', '#cce0ce');
+          drawPastelLeaf(805, 146, 18, 50, 14, '#acc7b0', '#d8eadb');
+
+          // Eucalyptus coins for soft botanical texture
+          drawEucalyptusCoin(435, 134, 13, -25, '#d6e6da', '#a5c2ac');
+          drawEucalyptusCoin(535, 168, 14, 15, '#d6e6da', '#a5c2ac');
+          drawEucalyptusCoin(655, 58, 13, -15, '#dcebe0', '#adc9b4');
+          drawEucalyptusCoin(792, 116, 14, 30, '#d6e6da', '#a5c2ac');
+
+          // 3. Delicate baby's breath (gypsophila) sprays
+          drawGypsophilaSpray(405, 114, 10);
+          drawGypsophilaSpray(505, 64, 25);
+          drawGypsophilaSpray(535, 196, -18);
+          drawGypsophilaSpray(755, 48, 45);
+          drawGypsophilaSpray(815, 108, 65);
+
+          // 4. Focal Pastel Blooms (Ivory Ranunculus, Blush Garden Rose, Champagne Peony & Pastel Buttercup Sunflowers)
+          drawPastelRanunculus(492, 126, 27, blushPalette);
+          drawPastelRanunculus(562, 144, 34, ivoryPalette);
+          drawPastelSunflower(624, 96, 42);
+          drawPastelRanunculus(666, 162, 29, peachChampagnePalette);
+          drawPastelRanunculus(748, 150, 31, blushPalette);
+          drawPastelSunflower(724, 88, 33);
+          drawPastelRanunculus(684, 124, 46, ivoryPalette);
 
           return canvas.toDataURL('image/png');
         }
 
-        // Header Banner in Olive Green + Sunflower Line + Right-side Floral Detail + 5 Summary KPI Cards (as in the original header!)
-        doc.setFillColor(50, 70, 38); // #324626
+        // Header Banner in Soft Pastel Sage-Olive + Pastel Champagne Line + Right-side Pastel Floral Bouquet + 5 Summary KPI Cards
+        doc.setFillColor(92, 118, 88); // Soft Pastel Sage-Olive (#5c7658)
         doc.rect(0, 0, 297, 26, 'F');
 
-        // Add proportional floral arrangement on the right side of the header (width = 84mm, height = 24mm -> exact 3.5:1 ratio matching 840x240px canvas)
+        // Add proportional pastel floral arrangement on the right side of the header (width = 84mm, height = 24mm -> exact 3.5:1 ratio matching 840x240px canvas)
         try {
           var floralDataUrl = createHeaderFloralDataUrl();
           if (floralDataUrl) {
@@ -2952,8 +3076,8 @@
           }
         } catch (err) {}
 
-        // Soft Sunflower accent line
-        doc.setFillColor(234, 179, 8); // #eab308
+        // Soft Pastel Champagne-Gold accent line
+        doc.setFillColor(238, 208, 138); // #eed08a
         doc.rect(0, 26, 297, 1.8, 'F');
 
         doc.setTextColor(255, 255, 255);
@@ -3007,23 +3131,23 @@
 
         summaryCards.forEach(function (c, i) {
           var x = 14 + i * (cardW + cardGap);
-          doc.setFillColor(250, 247, 240);
-          doc.setDrawColor(213, 208, 190);
+          doc.setFillColor(251, 249, 245); // Soft pastel warm ivory (#fbf9f5)
+          doc.setDrawColor(224, 219, 206); // Soft pastel border (#e0dbce)
           doc.roundedRect(x, cardY, cardW, cardH, 2, 2, 'FD');
 
           doc.setFont('helvetica', 'bold');
           doc.setFontSize(6.8);
-          doc.setTextColor(80, 101, 40);
+          doc.setTextColor(98, 122, 92); // Soft sage title (#627a5c)
           doc.text(c.title, x + 3, cardY + 5);
 
           doc.setFont('helvetica', 'bold');
           doc.setFontSize(9.5);
-          doc.setTextColor(31, 41, 28);
+          doc.setTextColor(52, 64, 50); // Soft charcoal-olive value (#344032)
           doc.text(c.main, x + 3, cardY + 11);
 
           doc.setFont('helvetica', 'normal');
           doc.setFontSize(7);
-          doc.setTextColor(90, 100, 82);
+          doc.setTextColor(115, 126, 110); // Soft muted subtext
           doc.text(c.sub, x + 3, cardY + 15.8);
         });
 
@@ -3070,15 +3194,15 @@
             font: 'helvetica',
             fontSize: 8.8,
             cellPadding: { top: 3.2, right: 3, bottom: 3.2, left: 3.2 },
-            textColor: [45, 42, 38],
-            fillColor: [250, 248, 245], // Warm off-white row background (#faf8f5)
-            lineColor: [226, 222, 214], // Subtle warm border (#e2ded6)
+            textColor: [58, 56, 52],
+            fillColor: [252, 250, 247], // Soft pastel cream-ivory row background (#fcfaf7)
+            lineColor: [232, 228, 220], // Soft pastel warm border (#e8e4dc)
             lineWidth: 0.25,
             valign: 'middle',
             overflow: 'linebreak'
           },
           headStyles: {
-            fillColor: [46, 70, 44],    // Deep Forest Olive Header (#2e462c)
+            fillColor: [98, 124, 94],   // Soft Pastel Sage-Olive Table Header (#627c5e)
             textColor: [255, 255, 255],
             fontStyle: 'bold',
             fontSize: 9,
@@ -3131,7 +3255,7 @@
                   } else {
                     data.cell.styles.fontSize = 8.6;
                   }
-                  data.cell.styles.textColor = [30, 64, 175]; // Subtle link blue (#1e40af)
+                  data.cell.styles.textColor = [59, 98, 138]; // Soft pastel link blue (#3b628a)
                   data.cell.styles.fontStyle = 'bold';
                 }
               }
@@ -3145,7 +3269,7 @@
               if (!rObj) return;
               var theme = getPdfRowTheme(rObj);
               doc.setFillColor(theme.strip[0], theme.strip[1], theme.strip[2]);
-              doc.rect(data.cell.x, data.cell.y, 2.3, data.cell.height, 'F');
+              doc.rect(data.cell.x, data.cell.y, 2.6, data.cell.height, 'F');
             }
 
             // Add interactive PDF hyperlink over the entire Instagram cell so tapping it opens the Instagram app
