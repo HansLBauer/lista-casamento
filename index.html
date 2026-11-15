@@ -579,7 +579,7 @@
                 <label for="input-telefone" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
                   Celular / WhatsApp <span class="text-[#6e7a62] font-normal">(opcional)</span>
                 </label>
-                <input id="input-telefone" type="tel" placeholder="Ex: (19) 99999-9999" class="input-wedding" />
+                <input id="input-telefone" type="tel" inputmode="numeric" maxlength="15" placeholder="(19) 99999-9999" class="input-wedding font-medium tracking-wide" />
               </div>
               <div>
                 <label for="input-instagram" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
@@ -656,6 +656,21 @@
                     <option value="Padrinho de Ambos">Padrinho de Ambos</option>
                     <option value="Madrinha de Ambos">Madrinha de Ambos</option>
                   </select>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div>
+                    <label for="input-acomp-telefone" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
+                      WhatsApp do Acomp. <span class="text-[#66705b] font-normal">(opcional)</span>
+                    </label>
+                    <input id="input-acomp-telefone" type="tel" inputmode="numeric" maxlength="15" placeholder="(19) 99999-9999" class="input-wedding font-medium tracking-wide" autocomplete="off" />
+                  </div>
+                  <div>
+                    <label for="input-acomp-instagram" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
+                      Instagram do Acomp. <span class="text-[#66705b] font-normal">(opcional)</span>
+                    </label>
+                    <input id="input-acomp-instagram" type="text" placeholder="Ex: @usuario" class="input-wedding" autocomplete="off" />
+                  </div>
                 </div>
 
                 <!-- Acompanhante NÃO leva acompanhante, mas pode levar criança -->
@@ -1286,6 +1301,50 @@
         return 'AMBOS';
       }
 
+      // Format phone numbers to Brazilian standard (99) 99999-9999 in real time while typing and when displaying
+      function formatPhoneBR(raw) {
+        if (!raw) return '';
+        var digits = String(raw).replace(/\D/g, '');
+        // Strip leading country code 55 if user pasted +5511999999999 (12 or 13 digits starting with 55)
+        if ((digits.length === 12 || digits.length === 13) && digits.indexOf('55') === 0) {
+          digits = digits.substring(2);
+        }
+        digits = digits.substring(0, 11);
+        if (digits.length === 0) return '';
+        if (digits.length <= 2) {
+          return '(' + digits;
+        }
+        if (digits.length <= 6) {
+          return '(' + digits.substring(0, 2) + ') ' + digits.substring(2);
+        }
+        if (digits.length <= 10) {
+          return '(' + digits.substring(0, 2) + ') ' + digits.substring(2, 6) + '-' + digits.substring(6);
+        }
+        return '(' + digits.substring(0, 2) + ') ' + digits.substring(2, 7) + '-' + digits.substring(7, 11);
+      }
+
+      function attachPhoneMask(inputEl) {
+        if (!inputEl) return;
+        inputEl.addEventListener('input', function (e) {
+          var val = e.target.value;
+          var digits = val.replace(/\D/g, '');
+          if (digits.length === 0) {
+            e.target.value = '';
+            return;
+          }
+          // If user is pressing backspace on "(99" or "(99) ", allow natural deletion
+          if (e.inputType === 'deleteContentBackward' && digits.length <= 2 && val.indexOf(')') === -1) {
+            e.target.value = '(' + digits;
+            return;
+          }
+          e.target.value = formatPhoneBR(digits);
+        });
+        inputEl.addEventListener('blur', function (e) {
+          var digits = e.target.value.replace(/\D/g, '');
+          e.target.value = digits.length > 0 ? formatPhoneBR(digits) : '';
+        });
+      }
+
       // Age rule: below 6 years (< 6) is Child; 6 or older (>= 6) is Adult.
       // If age is left blank on a child entry, default to < 6 (Child) until edited.
       function isChildUnder6(idadeStr) {
@@ -1355,6 +1414,23 @@
               : 'Acompanhante de convidado';
           }
 
+          // Compute PDF-specific Vinculo / Padrinho label for Titular matching screenshot
+          var hasAnyDependentsBelow = hasAcomp || kidsTitular.length > 0;
+          var hasUnnamedPlusOne = hasAcomp && !acompFullName && kidsTitular.length === 0 && deduplicatedAcompKids.length === 0;
+          var pdfTitularVinculo = 'Não';
+          if (g.relacao === 'Acompanhante de convidado' && g.acompResponsavelManual) {
+            pdfTitularVinculo = 'Acomp. de ' + g.acompResponsavelManual;
+          } else if (hasUnnamedPlusOne) {
+            pdfTitularVinculo = 'Sim (+1)';
+          } else if (hasAnyDependentsBelow) {
+            pdfTitularVinculo = 'Sim (abaixo)';
+          }
+          if (g.padrinho && g.padrinho !== 'Não') {
+            pdfTitularVinculo = pdfTitularVinculo === 'Não'
+              ? g.padrinho
+              : (g.padrinho + ' • ' + pdfTitularVinculo);
+          }
+
           rows.push({
             rowNum: rowNumber++,
             groupId: g.id,
@@ -1362,6 +1438,9 @@
             roleCode: 'TITULAR',
             tipoLabel: '1. Convidado',
             indicadorVinculo: titularVinculo,
+            pdfRelacao: effRelacao,
+            pdfVinculo: pdfTitularVinculo,
+            pdfIdade: '-',
             nome: (g.nome || '').trim(),
             sobrenome: (g.sobrenome || '').trim(),
             nomeExibicao: titularFullName,
@@ -1370,7 +1449,7 @@
             cidade: effCidade,
             cidadeBase: g.cidade,
             padrinho: g.padrinho || 'Não',
-            telefone: g.telefone || '',
+            telefone: formatPhoneBR(g.telefone || ''),
             instagram: g.instagram || '',
             idade: 'Adulto',
             isUnder6: false,
@@ -1381,6 +1460,10 @@
           // Helper to push Companion row
           function pushCompanionRow(orderNum) {
             if (!hasAcomp) return;
+            var pdfAcompVinculo = 'Acomp. de ' + titularFullName;
+            if (acompObj.padrinho && acompObj.padrinho !== 'Não') {
+              pdfAcompVinculo = acompObj.padrinho + ' (' + pdfAcompVinculo + ')';
+            }
             rows.push({
               rowNum: rowNumber++,
               groupId: g.id,
@@ -1388,6 +1471,9 @@
               roleCode: 'ACOMPANHANTE',
               tipoLabel: orderNum === 2 ? '2. Acompanhante' : '3. Acompanhante',
               indicadorVinculo: '↳ Acompanhante de ' + titularFullName,
+              pdfRelacao: 'Acompanhante de convidado',
+              pdfVinculo: pdfAcompVinculo,
+              pdfIdade: '-',
               nome: acompFirstName || ('Acompanhante (+1)'),
               sobrenome: acompLastName,
               nomeExibicao: acompDisplayLabel,
@@ -1396,8 +1482,8 @@
               cidade: effCidade,
               cidadeBase: g.cidade,
               padrinho: acompObj.padrinho || 'Não',
-              telefone: '',
-              instagram: '',
+              telefone: formatPhoneBR(acompObj.telefone || ''),
+              instagram: acompObj.instagram || '',
               idade: 'Adulto',
               isUnder6: false,
               classificacaoEtaria: 'Adulto',
@@ -1418,6 +1504,9 @@
                 ? ('↳ Criança de ' + titularFullName + ' e ' + (acompFullName || 'Acompanhante'))
                 : ('↳ Criança de ' + titularFullName);
 
+              var pdfKidResp = isThisKidShared
+                ? ('Resp.: ' + titularFullName + ' e ' + (acompFullName || 'Acompanhante'))
+                : ('Resp.: ' + titularFullName);
               rows.push({
                 rowNum: rowNumber++,
                 groupId: g.id,
@@ -1425,6 +1514,9 @@
                 roleCode: isThisKidShared ? 'CRIANCA_AMBOS' : 'CRIANCA_CONVIDADO',
                 tipoLabel: isThisKidShared ? '3. Criança de Ambos' : '2. Criança de Convidado',
                 indicadorVinculo: respLabel,
+                pdfRelacao: 'Criança de convidado',
+                pdfVinculo: pdfKidResp,
+                pdfIdade: kAge !== '' ? (kAge + ' anos') : '< 6 anos',
                 nome: kName,
                 sobrenome: '',
                 nomeExibicao: kName,
@@ -1480,6 +1572,9 @@
                 roleCode: 'CRIANCA_ACOMPANHANTE',
                 tipoLabel: '4. Criança de Acompanhante',
                 indicadorVinculo: '↳ Criança de ' + acompRef,
+                pdfRelacao: 'Criança de acompanhante',
+                pdfVinculo: 'Resp.: ' + acompRef,
+                pdfIdade: kAge !== '' ? (kAge + ' anos') : '< 6 anos',
                 nome: kName,
                 sobrenome: '',
                 nomeExibicao: kName,
@@ -1957,7 +2052,7 @@
         handleCidadeChange();
 
         document.getElementById('select-padrinho').value = g.padrinho || 'Não';
-        document.getElementById('input-telefone').value = g.telefone || '';
+        document.getElementById('input-telefone').value = formatPhoneBR(g.telefone || '');
         document.getElementById('input-instagram').value = g.instagram || '';
 
         // Titular children
@@ -1988,6 +2083,8 @@
           document.getElementById('input-acomp-nome').value = ac.nome || '';
           document.getElementById('input-acomp-sobrenome').value = ac.sobrenome || '';
           document.getElementById('select-acomp-padrinho').value = ac.padrinho || 'Não';
+          document.getElementById('input-acomp-telefone').value = formatPhoneBR(ac.telefone || '');
+          document.getElementById('input-acomp-instagram').value = ac.instagram || '';
 
           var chkAcompKids = document.getElementById('chk-acomp-criancas');
           var panelAcompKids = document.getElementById('panel-acomp-criancas');
@@ -2014,6 +2111,8 @@
           document.getElementById('input-acomp-nome').value = '';
           document.getElementById('input-acomp-sobrenome').value = '';
           document.getElementById('select-acomp-padrinho').value = 'Não';
+          document.getElementById('input-acomp-telefone').value = '';
+          document.getElementById('input-acomp-instagram').value = '';
           document.getElementById('chk-acomp-criancas').checked = false;
           document.getElementById('panel-acomp-criancas').classList.add('hidden');
           document.getElementById('chk-criancas-compartilhadas').checked = false;
@@ -2098,7 +2197,7 @@
           cidadeOutros = '';
         }
         var padrinho = document.getElementById('select-padrinho').value || 'Não';
-        var telefone = document.getElementById('input-telefone').value.trim();
+        var telefone = formatPhoneBR(document.getElementById('input-telefone').value.trim());
         var instagram = document.getElementById('input-instagram').value.trim();
 
         var temCriancasTitular = document.getElementById('chk-titular-criancas').checked;
@@ -2108,6 +2207,8 @@
         var acompNome = document.getElementById('input-acomp-nome').value.trim();
         var acompSobrenome = document.getElementById('input-acomp-sobrenome').value.trim();
         var acompPadrinho = document.getElementById('select-acomp-padrinho').value || 'Não';
+        var acompTelefone = formatPhoneBR(document.getElementById('input-acomp-telefone').value.trim());
+        var acompInstagram = document.getElementById('input-acomp-instagram').value.trim();
         var temCriancasAcomp = temAcompanhante && document.getElementById('chk-acomp-criancas').checked;
         var criancasCompartilhadas = temCriancasAcomp && document.getElementById('chk-criancas-compartilhadas').checked;
         var criancasAcomp = (temCriancasAcomp && !criancasCompartilhadas)
@@ -2133,6 +2234,8 @@
             nome: acompNome,
             sobrenome: acompSobrenome,
             padrinho: acompPadrinho,
+            telefone: acompTelefone,
+            instagram: acompInstagram,
             temCriancasAcomp: temCriancasAcomp,
             criancasCompartilhadas: criancasCompartilhadas,
             criancasAcomp: criancasAcomp
@@ -2353,6 +2456,10 @@
         // Normalize remote groups and extract any new cities so they are added to the dropdown list automatically
         var cleanRemote = (remoteGroups || []).map(function (rg) {
           rg.synced = true;
+          if (rg.telefone) rg.telefone = formatPhoneBR(rg.telefone);
+          if (rg.acompanhante && rg.acompanhante.telefone) {
+            rg.acompanhante.telefone = formatPhoneBR(rg.acompanhante.telefone);
+          }
           var effCity = getEffectiveCidade(rg);
           if (effCity && effCity !== 'Outros') {
             if (PRESET_CITIES.indexOf(effCity) === -1 && customCities.indexOf(effCity) === -1) {
@@ -2489,7 +2596,66 @@
         }
       }
 
-      // --- EXPORT PERFECTLY FORMATTED PDF (NO LINE BREAKS, FULL PADRINHO/MADRINHA) ---
+      // --- EXPORT PERFECTLY FORMATTED PDF MATCHING COLOR-CODED VISUAL MODEL ---
+      function getPdfRowTheme(rObj) {
+        if (!rObj) {
+          return {
+            strip: [16, 185, 129],
+            relBg: [236, 253, 245],
+            relText: [6, 95, 70],
+            relFontSize: 8.5
+          };
+        }
+        var rel = String(rObj.pdfRelacao || rObj.relacao || '');
+        if (rel === 'Criança de convidado') {
+          return {
+            strip: [245, 158, 11],     // Amber/Yellow vertical bar
+            relBg: [254, 247, 230],    // Soft warm cream-yellow cell
+            relText: [120, 53, 15],    // Warm brown-amber bold text
+            relFontSize: 8.5
+          };
+        }
+        if (rel === 'Criança de acompanhante') {
+          return {
+            strip: [168, 85, 247],     // Purple vertical bar
+            relBg: [246, 240, 254],    // Soft lavender cell
+            relText: [107, 33, 168],   // Deep purple bold text
+            relFontSize: 7.5
+          };
+        }
+        if (rel === 'Acompanhante de convidado') {
+          return {
+            strip: [82, 110, 90],      // Muted slate-olive vertical bar
+            relBg: [237, 241, 237],    // Soft sage-gray cell
+            relText: [55, 75, 60],     // Dark slate-olive bold text
+            relFontSize: 7.4
+          };
+        }
+        if (rel.indexOf('Hans') !== -1) {
+          return {
+            strip: [59, 130, 246],     // Blue vertical bar
+            relBg: [239, 246, 255],    // Soft light-blue cell
+            relText: [30, 58, 138],    // Navy blue bold text
+            relFontSize: 8.5
+          };
+        }
+        if (rel.indexOf('Laís') !== -1 || rel.indexOf('Lais') !== -1) {
+          return {
+            strip: [244, 63, 94],      // Rose/Pink vertical bar
+            relBg: [253, 242, 248],    // Soft rose-pink cell
+            relText: [136, 19, 55],    // Burgundy-rose bold text
+            relFontSize: 8.5
+          };
+        }
+        // Default: Amigo de ambos / Conhecido de ambos / Outros
+        return {
+          strip: [16, 185, 129],       // Mint-emerald green vertical bar
+          relBg: [234, 248, 240],      // Soft mint green cell
+          relText: [6, 95, 70],        // Deep emerald green bold text
+          relFontSize: 8.5
+        };
+      }
+
       function exportFormattedPdf() {
         if (!window.jspdf || !window.jspdf.jsPDF) {
           window.print();
@@ -2497,7 +2663,6 @@
         }
 
         var jsPDF = window.jspdf.jsPDF;
-        // Landscape A4 so columns have generous width and zero word wrapping
         var doc = new jsPDF({
           orientation: 'landscape',
           unit: 'mm',
@@ -2507,9 +2672,240 @@
         var stats = computeMetrics(guestGroups);
         var rows = expandGroupsToRows(guestGroups);
 
-        // Header Banner in Olive Green
+        // Helper to draw a high-DPI proportional floral arrangement (sunflowers, white ranunculus/roses & olive leaves)
+        // for the right side of the olive green PDF header banner without any aspect-ratio distortion
+        function createHeaderFloralDataUrl() {
+          var canvas = document.createElement('canvas');
+          // Exact 3.5 : 1 aspect ratio -> placed at 84mm x 24mm (100% locked 1:1 scale, zero stretching)
+          canvas.width = 840;
+          canvas.height = 240;
+          var ctx = canvas.getContext('2d');
+          if (!ctx) return null;
+
+          // Subtle golden-glow aura on the right
+          var glow = ctx.createRadialGradient(690, 120, 10, 690, 120, 220);
+          glow.addColorStop(0, 'rgba(250, 204, 21, 0.14)');
+          glow.addColorStop(1, 'rgba(50, 70, 38, 0)');
+          ctx.fillStyle = glow;
+          ctx.fillRect(0, 0, 840, 240);
+
+          // Draw delicate golden botanical stems curving from right to left
+          function drawStem(x1, y1, cx, cy, x2, y2, width, color) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.quadraticCurveTo(cx, cy, x2, y2);
+            ctx.strokeStyle = color || '#b89742';
+            ctx.lineWidth = width || 2.5;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+            ctx.restore();
+          }
+
+          // Draw an olive / eucalyptus leaf with central vein
+          function drawLeaf(x, y, angleDeg, len, wid, fillCol, veinCol) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate((angleDeg * Math.PI) / 180);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.quadraticCurveTo(len * 0.5, -wid, len, 0);
+            ctx.quadraticCurveTo(len * 0.5, wid, 0, 0);
+            ctx.closePath();
+            ctx.fillStyle = fillCol || '#6f8c4a';
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(254, 243, 199, 0.35)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(2, 0);
+            ctx.lineTo(len * 0.86, 0);
+            ctx.strokeStyle = veinCol || 'rgba(254, 243, 199, 0.45)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.restore();
+          }
+
+          // Draw a detailed botanical sunflower (Girassol)
+          function drawSunflower(cx, cy, radius) {
+            ctx.save();
+            ctx.translate(cx, cy);
+
+            // Soft drop shadow
+            ctx.shadowColor = 'rgba(15, 25, 10, 0.38)';
+            ctx.shadowBlur = 8;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 3;
+
+            // Back layer of petals (20 petals, warm amber-gold)
+            var backPetals = 20;
+            for (var i = 0; i < backPetals; i++) {
+              ctx.save();
+              ctx.rotate((i * 2 * Math.PI) / backPetals);
+              ctx.beginPath();
+              ctx.moveTo(radius * 0.25, 0);
+              ctx.quadraticCurveTo(radius * 0.72, -radius * 0.22, radius * 1.05, 0);
+              ctx.quadraticCurveTo(radius * 0.72, radius * 0.22, radius * 0.25, 0);
+              ctx.closePath();
+              var gradB = ctx.createLinearGradient(radius * 0.25, 0, radius * 1.05, 0);
+              gradB.addColorStop(0, '#d97706');
+              gradB.addColorStop(0.55, '#f59e0b');
+              gradB.addColorStop(1, '#fbbf24');
+              ctx.fillStyle = gradB;
+              ctx.fill();
+              ctx.restore();
+            }
+
+            ctx.shadowColor = 'transparent';
+
+            // Front layer of petals (20 offset petals, bright golden yellow)
+            for (var j = 0; j < backPetals; j++) {
+              ctx.save();
+              ctx.rotate(((j + 0.5) * 2 * Math.PI) / backPetals);
+              ctx.beginPath();
+              ctx.moveTo(radius * 0.24, 0);
+              ctx.quadraticCurveTo(radius * 0.68, -radius * 0.18, radius * 0.98, 0);
+              ctx.quadraticCurveTo(radius * 0.68, radius * 0.18, radius * 0.24, 0);
+              ctx.closePath();
+              var gradF = ctx.createLinearGradient(radius * 0.24, 0, radius * 0.98, 0);
+              gradF.addColorStop(0, '#eab308');
+              gradF.addColorStop(0.6, '#facc15');
+              gradF.addColorStop(1, '#fef08a');
+              ctx.fillStyle = gradF;
+              ctx.fill();
+              ctx.strokeStyle = 'rgba(180, 83, 9, 0.25)';
+              ctx.lineWidth = 0.8;
+              ctx.stroke();
+              ctx.restore();
+            }
+
+            // Center dark brown disc
+            var discR = radius * 0.36;
+            var discGrad = ctx.createRadialGradient(0, 0, discR * 0.1, 0, 0, discR);
+            discGrad.addColorStop(0, '#3b1d0a');
+            discGrad.addColorStop(0.7, '#5c2d0e');
+            discGrad.addColorStop(1, '#92400e');
+            ctx.beginPath();
+            ctx.arc(0, 0, discR, 0, Math.PI * 2);
+            ctx.fillStyle = discGrad;
+            ctx.fill();
+
+            // Golden pollen ring & seed texture dots
+            for (var d = 0; d < 28; d++) {
+              var ang = (d * 137.5 * Math.PI) / 180;
+              var rDot = Math.sqrt(d / 28) * (discR * 0.85);
+              ctx.beginPath();
+              ctx.arc(Math.cos(ang) * rDot, Math.sin(ang) * rDot, 1.3, 0, Math.PI * 2);
+              ctx.fillStyle = d > 16 ? '#fbbf24' : '#b45309';
+              ctx.fill();
+            }
+
+            ctx.restore();
+          }
+
+          // Draw a delicate white/cream ranunculus / rose blossom
+          function drawWhiteBlossom(cx, cy, radius) {
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.shadowColor = 'rgba(15, 25, 10, 0.32)';
+            ctx.shadowBlur = 6;
+            ctx.shadowOffsetY = 2;
+
+            var rings = [
+              { count: 10, rOut: radius, rIn: radius * 0.3, col1: '#f5f0e1', col2: '#ffffff' },
+              { count: 8, rOut: radius * 0.72, rIn: radius * 0.2, col1: '#ede4cc', col2: '#fffdf7' },
+              { count: 6, rOut: radius * 0.46, rIn: radius * 0.1, col1: '#e6d8b5', col2: '#faf5e6' }
+            ];
+
+            rings.forEach(function (ring, idx) {
+              for (var i = 0; i < ring.count; i++) {
+                ctx.save();
+                ctx.rotate(((i + idx * 0.35) * 2 * Math.PI) / ring.count);
+                ctx.beginPath();
+                ctx.arc(ring.rOut * 0.52, 0, ring.rOut * 0.46, 0, Math.PI * 2);
+                var g = ctx.createRadialGradient(ring.rOut * 0.5, 0, 1, ring.rOut * 0.5, 0, ring.rOut * 0.5);
+                g.addColorStop(0, ring.col1);
+                g.addColorStop(1, ring.col2);
+                ctx.fillStyle = g;
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(180, 165, 130, 0.35)';
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+                ctx.restore();
+              }
+              ctx.shadowColor = 'transparent';
+            });
+
+            // Warm golden-olive bud center
+            ctx.beginPath();
+            ctx.arc(0, 0, radius * 0.18, 0, Math.PI * 2);
+            ctx.fillStyle = '#d4a74a';
+            ctx.fill();
+            ctx.restore();
+          }
+
+          // Draw small golden-white floral buds / baby's breath (gipsófila)
+          function drawBudCluster(x, y) {
+            var offsets = [[0, 0, 4.5], [-10, -7, 3.5], [9, -6, 3.2], [-6, 8, 3.2], [11, 6, 3.8]];
+            offsets.forEach(function (o) {
+              ctx.beginPath();
+              ctx.arc(x + o[0], y + o[1], o[2], 0, Math.PI * 2);
+              ctx.fillStyle = '#fef9c3';
+              ctx.fill();
+              ctx.strokeStyle = '#ca8a04';
+              ctx.lineWidth = 0.9;
+              ctx.stroke();
+            });
+          }
+
+          // 1. Stems & foliage sprays
+          drawStem(820, 195, 620, 150, 380, 125, 3, '#a38948');
+          drawStem(810, 55, 650, 95, 470, 72, 2.5, '#a38948');
+          drawStem(780, 120, 660, 180, 520, 195, 2.2, '#8fa365');
+
+          // 2. Olive & eucalyptus leaves
+          drawLeaf(430, 125, -165, 58, 15, '#658042');
+          drawLeaf(485, 110, -140, 52, 14, '#7c9656');
+          drawLeaf(510, 142, 160, 55, 15, '#587238');
+          drawLeaf(545, 78, -145, 62, 16, '#7c9656');
+          drawLeaf(605, 62, -120, 56, 15, '#658042');
+          drawLeaf(585, 178, 145, 60, 16, '#658042');
+          drawLeaf(645, 192, 125, 52, 14, '#7c9656');
+          drawLeaf(735, 52, -65, 62, 16, '#658042');
+          drawLeaf(775, 78, -35, 58, 15, '#7c9656');
+          drawLeaf(765, 175, 45, 60, 15, '#587238');
+          drawLeaf(800, 145, 20, 52, 14, '#7c9656');
+          drawLeaf(670, 48, -100, 48, 13, '#849e5e');
+
+          // 3. Baby's breath / golden-white buds
+          drawBudCluster(415, 118);
+          drawBudCluster(515, 66);
+          drawBudCluster(555, 192);
+          drawBudCluster(795, 108);
+
+          // 4. White ranunculus / roses & Sunflowers (proportionally scaled circles)
+          drawWhiteBlossom(548, 138, 28);
+          drawWhiteBlossom(748, 148, 25);
+          drawSunflower(622, 102, 42);
+          drawSunflower(718, 92, 33);
+          drawWhiteBlossom(668, 162, 24);
+          drawSunflower(685, 124, 52);
+
+          return canvas.toDataURL('image/png');
+        }
+
+        // Header Banner in Olive Green + Sunflower Line + Right-side Floral Detail + 5 Summary KPI Cards (as in the original header!)
         doc.setFillColor(50, 70, 38); // #324626
         doc.rect(0, 0, 297, 26, 'F');
+
+        // Add proportional floral arrangement on the right side of the header (width = 84mm, height = 24mm -> exact 3.5:1 ratio matching 840x240px canvas)
+        try {
+          var floralDataUrl = createHeaderFloralDataUrl();
+          if (floralDataUrl) {
+            doc.addImage(floralDataUrl, 'PNG', 210, 1, 84, 24);
+          }
+        } catch (err) {}
 
         // Soft Sunflower accent line
         doc.setFillColor(234, 179, 8); // #eab308
@@ -2586,20 +2982,23 @@
           doc.text(c.sub, x + 3, cardY + 15.8);
         });
 
-        // Table Data following strict 1-2-3-4 hierarchy and FULL "Padrinho" / "Madrinha" wording
+        // Build 8-column table matching the exact layout from the reference screenshot:
+        // # | Nome e Sobrenome | Relação | Cidade | Vínculo / Padrinho | Idade | WhatsApp | Instagram
         var tableBody = rows.map(function (r) {
-          var vinculoClean = r.indicadorVinculo.replace('↳ ', '-> ');
-          var padrinhoFull = r.padrinho || 'Não'; // Never abbreviated!
-          var contatoStr = [r.telefone, r.instagram].filter(Boolean).join(' | ') || '-';
+          var whatsappFormatted = r.telefone ? formatPhoneBR(r.telefone) : '-';
+          var instaFormatted = r.instagram ? r.instagram.trim() : '-';
+          if (instaFormatted !== '-' && instaFormatted.indexOf('@') !== 0 && instaFormatted.indexOf('http') !== 0) {
+            instaFormatted = '@' + instaFormatted;
+          }
           return [
             String(r.rowNum),
             r.nomeExibicao,
-            vinculoClean,
-            r.relacao,
-            r.cidade,
-            padrinhoFull,
-            r.classificacaoEtaria + (r.roleCode.indexOf('CRIANCA') === 0 ? ' (' + r.idade + ')' : ''),
-            contatoStr
+            r.pdfRelacao || r.relacao,
+            r.cidade || '-',
+            r.pdfVinculo || 'Não',
+            r.pdfIdade || '-',
+            whatsappFormatted,
+            instaFormatted
           ];
         });
 
@@ -2609,63 +3008,82 @@
 
         doc.autoTable({
           startY: 54,
-          margin: { left: 14, right: 14 },
+          margin: { left: 14, right: 14, top: 14, bottom: 12 },
           head: [[
             '#',
-            'Convidado / Pessoa',
-            'Vinculo / Ordem (1 a 4)',
-            'Relacao com os Noivos',
+            'Nome e Sobrenome',
+            'Relação',
             'Cidade',
-            'Padrinho ou Madrinha',
-            'Classificacao Etaria',
-            'Celular / Instagram'
+            'Vínculo / Padrinho',
+            'Idade',
+            'WhatsApp',
+            'Instagram'
           ]],
           body: tableBody,
           theme: 'grid',
           styles: {
             font: 'helvetica',
-            fontSize: 8,
-            cellPadding: 2.4,
-            textColor: [31, 41, 28],
-            lineColor: [220, 215, 198],
-            lineWidth: 0.2,
-            overflow: 'ellipsize',
-            cellWidth: 'wrap'
+            fontSize: 8.8,
+            cellPadding: { top: 3.2, right: 3, bottom: 3.2, left: 3.2 },
+            textColor: [45, 42, 38],
+            fillColor: [250, 248, 245], // Warm off-white row background (#faf8f5)
+            lineColor: [226, 222, 214], // Subtle warm border (#e2ded6)
+            lineWidth: 0.25,
+            valign: 'middle',
+            overflow: 'linebreak'
           },
           headStyles: {
-            fillColor: [50, 70, 38],
+            fillColor: [46, 70, 44],    // Deep Forest Olive Header (#2e462c)
             textColor: [255, 255, 255],
             fontStyle: 'bold',
-            fontSize: 8,
-            halign: 'left'
+            fontSize: 9,
+            halign: 'left',
+            valign: 'middle',
+            cellPadding: { top: 3.4, right: 3, bottom: 3.4, left: 3.2 }
           },
           columnStyles: {
-            0: { halign: 'center', cellWidth: 10 },
-            1: { cellWidth: 46, fontStyle: 'bold' },
-            2: { cellWidth: 52 },
-            3: { cellWidth: 36 },
-            4: { cellWidth: 28 },
-            5: { cellWidth: 34 },
-            6: { cellWidth: 35 },
+            0: { halign: 'center', cellWidth: 11, textColor: [75, 75, 75] },
+            1: { cellWidth: 54, cellPadding: { top: 3.2, right: 3, bottom: 3.2, left: 5 } },
+            2: { cellWidth: 43, fontStyle: 'bold' },
+            3: { cellWidth: 35 },
+            4: { cellWidth: 47 },
+            5: { halign: 'center', cellWidth: 18 },
+            6: { cellWidth: 33 },
             7: { cellWidth: 28 }
           },
           didParseCell: function (data) {
+            if (data.section === 'head' && (data.column.index === 0 || data.column.index === 5)) {
+              data.cell.styles.halign = 'center';
+            }
             if (data.section === 'body') {
               var rowIdx = data.row.index;
               var rObj = rows[rowIdx];
-              if (rObj && rObj.roleCode !== 'TITULAR') {
-                data.cell.styles.fillColor = [250, 249, 245];
-              }
-              if (rObj && rObj.padrinho && rObj.padrinho !== 'Não' && data.column.index === 5) {
-                data.cell.styles.fillColor = [254, 249, 195];
-                data.cell.styles.textColor = [133, 77, 14];
+              if (!rObj) return;
+              var theme = getPdfRowTheme(rObj);
+
+              // Column 2: "Relação" gets category-tinted background and bold colored text
+              if (data.column.index === 2) {
+                data.cell.styles.fillColor = theme.relBg;
+                data.cell.styles.textColor = theme.relText;
                 data.cell.styles.fontStyle = 'bold';
+                data.cell.styles.fontSize = theme.relFontSize;
               }
+            }
+          },
+          didDrawCell: function (data) {
+            // Draw the vertical colored category stripe along the left edge of Column 1 ("Nome e Sobrenome")
+            if (data.section === 'body' && data.column.index === 1) {
+              var rowIdx = data.row.index;
+              var rObj = rows[rowIdx];
+              if (!rObj) return;
+              var theme = getPdfRowTheme(rObj);
+              doc.setFillColor(theme.strip[0], theme.strip[1], theme.strip[2]);
+              doc.rect(data.cell.x, data.cell.y, 2.3, data.cell.height, 'F');
             }
           }
         });
 
-        doc.save('Lista_Convidados_Casamento_Lais_e_Hans.pdf');
+        doc.save('lista_convidados_casamento_hans_e_lais.pdf');
         showToast('Arquivo PDF gerado e baixado com sucesso!', 'success');
       }
 
@@ -2995,6 +3413,10 @@
             if (Array.isArray(parsed)) {
               guestGroups = parsed;
               guestGroups.forEach(function (g) {
+                if (g.telefone) g.telefone = formatPhoneBR(g.telefone);
+                if (g.acompanhante && g.acompanhante.telefone) {
+                  g.acompanhante.telefone = formatPhoneBR(g.acompanhante.telefone);
+                }
                 var c = getEffectiveCidade(g);
                 if (c && c !== 'Outros' && PRESET_CITIES.indexOf(c) === -1 && customCities.indexOf(c) === -1) {
                   customCities.push(c);
@@ -3013,9 +3435,11 @@
         renderChildrenInputs('list-criancas-titular', 1, [{ nome: '', idade: '' }], 'Criança do Titular');
         renderChildrenInputs('list-criancas-acomp', 1, [{ nome: '', idade: '' }], 'Criança do Acomp.');
 
-        // Form change listeners
+        // Form change listeners & real-time (99) 99999-9999 phone mask
         document.getElementById('select-relacao').addEventListener('change', handleRelacaoChange);
         document.getElementById('select-cidade').addEventListener('change', handleCidadeChange);
+        attachPhoneMask(document.getElementById('input-telefone'));
+        attachPhoneMask(document.getElementById('input-acomp-telefone'));
 
         document.getElementById('chk-titular-criancas').addEventListener('change', function (e) {
           var panel = document.getElementById('panel-titular-criancas');
