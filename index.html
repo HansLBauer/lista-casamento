@@ -1892,13 +1892,19 @@
             }
           }
 
-          // Dedicated Instagram column (aligned vertically right under each other, independent of phone)
+          // Dedicated Instagram column (aligned vertically right under each other, independent of phone, with SVG Instagram icon)
+          var instaSvgIcon =
+            '<svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+              '<rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>' +
+              '<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>' +
+              '<line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>' +
+            '</svg>';
           var instaHtml = '<span class="text-xs text-[#9ca38f]">—</span>';
           var instaObj = parseInstagramInfo(r.instagram);
           if (instaObj) {
             instaHtml =
               '<a href="' + escapeHtml(instaObj.url) + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs bg-[#fdf4f6] hover:bg-[#fce7f3] text-[#944258] border border-[#f7ced8] font-semibold transition nowrap-strict" title="Abrir perfil no aplicativo do Instagram">' +
-                '<span>📸</span><span>' + escapeHtml(instaObj.handle) + '</span>' +
+                instaSvgIcon + '<span>' + escapeHtml(instaObj.handle) + '</span>' +
               '</a>';
           }
 
@@ -2700,24 +2706,27 @@
         }
       }
 
-      // --- UNIFIED PASTEL COLOR PALETTE FOR BOTH WEB APP & PDF ---
+      // --- UNIFIED PASTEL COLOR PALETTE FOR BOTH WEB APP & PDF (1 DISTINCT PASTEL COLOR PER RELAÇÃO) ---
       function getPdfRowTheme(rObj) {
         if (!rObj) {
           return {
-            strip: [163, 209, 182],    // Soft Pastel Mint-Sage (#a3d1b6)
-            relBg: [240, 249, 244],    // #f0f9f4
-            relText: [61, 107, 82],    // #3d6b52
-            relBorder: '#c6e4d2',
-            stripHex: '#a3d1b6',
-            relBgHex: '#f0f9f4',
-            relTextHex: '#3d6b52',
+            strip: [157, 212, 184],    // Soft Pastel Mint (#9dd4b8)
+            relBg: [239, 249, 244],    // #eff9f4
+            relText: [53, 105, 79],    // #35694f
+            relBorder: '#c4e6d4',
+            stripHex: '#9dd4b8',
+            relBgHex: '#eff9f4',
+            relTextHex: '#35694f',
             relFontSize: 8.5
           };
         }
-        var rel = String(rObj.pdfRelacao || rObj.relacao || '');
+        var rel = String(rObj.pdfRelacao || rObj.relacao || '').trim();
+        var relLower = rel.toLowerCase();
+
+        // 1. Criança de convidado -> Amarelo-Baunilha Pastel (Pastel Buttercup)
         if (rel === 'Criança de convidado') {
           return {
-            strip: [243, 206, 133],    // Soft Pastel Buttercup/Champagne (#f3ce85)
+            strip: [243, 206, 133],    // #f3ce85
             relBg: [254, 250, 238],    // #fefaee
             relText: [140, 98, 34],    // #8c6222
             relBorder: '#f5dfb0',
@@ -2727,63 +2736,168 @@
             relFontSize: 8.5
           };
         }
+
+        // 2. Criança de acompanhante -> Violeta-Íris Pastel (Pastel Iris/Orchid)
         if (rel === 'Criança de acompanhante') {
           return {
-            strip: [203, 180, 227],    // Soft Pastel Lilac/Lavender (#cbb4e3)
-            relBg: [248, 245, 253],    // #f8f5fd
-            relText: [109, 76, 148],   // #6d4c94
-            relBorder: '#dfd1f0',
-            stripHex: '#cbb4e3',
-            relBgHex: '#f8f5fd',
-            relTextHex: '#6d4c94',
+            strip: [195, 166, 232],    // #c3a6e8
+            relBg: [246, 241, 253],    // #f6f1fd
+            relText: [98, 63, 145],    // #623f91
+            relBorder: '#dccbf2',
+            stripHex: '#c3a6e8',
+            relBgHex: '#f6f1fd',
+            relTextHex: '#623f91',
             relFontSize: 7.5
           };
         }
+
+        // 3. Acompanhante de convidado -> Verde-Eucalipto Pastel (Pastel Eucalyptus/Sage)
         if (rel === 'Acompanhante de convidado') {
           return {
-            strip: [178, 194, 181],    // Soft Pastel Eucalyptus/Sage (#b2c2b5)
+            strip: [178, 196, 181],    // #b2c4b5
             relBg: [243, 246, 243],    // #f3f6f3
-            relText: [78, 99, 83],     // #4e6353
-            relBorder: '#d2dcd4',
-            stripHex: '#b2c2b5',
+            relText: [76, 99, 82],     // #4c6352
+            relBorder: '#d1ded4',
+            stripHex: '#b2c4b5',
             relBgHex: '#f3f6f3',
-            relTextHex: '#4e6353',
+            relTextHex: '#4c6352',
             relFontSize: 7.4
           };
         }
-        if (rel.indexOf('Hans') !== -1) {
+
+        // 4. Família da Laís -> Rosa-Blush Pastel (Pastel Blush Rose)
+        if (relLower.indexOf('família da laís') !== -1 || relLower.indexOf('familia da lais') !== -1) {
           return {
-            strip: [158, 197, 232],    // Soft Pastel Baby/Sky Blue (#9ec5e8)
-            relBg: [242, 247, 253],    // #f2f7fd
-            relText: [59, 98, 138],    // #3b628a
-            relBorder: '#c9dff4',
-            stripHex: '#9ec5e8',
-            relBgHex: '#f2f7fd',
-            relTextHex: '#3b628a',
+            strip: [242, 167, 187],    // #f2a7bb
+            relBg: [253, 242, 246],    // #fdf2f6
+            relText: [148, 56, 82],    // #943852
+            relBorder: '#f7cad7',
+            stripHex: '#f2a7bb',
+            relBgHex: '#fdf2f6',
+            relTextHex: '#943852',
             relFontSize: 8.5
           };
         }
-        if (rel.indexOf('Laís') !== -1 || rel.indexOf('Lais') !== -1) {
+
+        // 5. Amigo(a) da Laís -> Pêssego-Coral Pastel (Pastel Apricot/Coral)
+        if (relLower.indexOf('amigo') !== -1 && (relLower.indexOf('laís') !== -1 || relLower.indexOf('lais') !== -1)) {
           return {
-            strip: [242, 174, 190],    // Soft Pastel Blush Rose (#f2aebe)
-            relBg: [253, 244, 246],    // #fdf4f6
-            relText: [148, 66, 88],    // #944258
-            relBorder: '#f7ced8',
-            stripHex: '#f2aebe',
-            relBgHex: '#fdf4f6',
-            relTextHex: '#944258',
+            strip: [245, 184, 158],    // #f5b89e
+            relBg: [254, 245, 240],    // #fef5f0
+            relText: [150, 75, 45],    // #964b2d
+            relBorder: '#f9d5c5',
+            stripHex: '#f5b89e',
+            relBgHex: '#fef5f0',
+            relTextHex: '#964b2d',
             relFontSize: 8.5
           };
         }
-        // Default: Amigo de ambos / Conhecido de ambos / Outros
+
+        // 6. UBS da Laís -> Lilás-Malva Pastel (Pastel Mauve/Lilac)
+        if (relLower.indexOf('ubs') !== -1 && (relLower.indexOf('laís') !== -1 || relLower.indexOf('lais') !== -1)) {
+          return {
+            strip: [219, 178, 216],    // #dbb2d8
+            relBg: [251, 244, 250],    // #fbf4fa
+            relText: [122, 66, 118],   // #7a4276
+            relBorder: '#ead0e8',
+            stripHex: '#dbb2d8',
+            relBgHex: '#fbf4fa',
+            relTextHex: '#7a4276',
+            relFontSize: 8.5
+          };
+        }
+
+        // 7. Família do Hans -> Azul-Serenity Pastel (Pastel Sky Blue)
+        if (relLower.indexOf('família do hans') !== -1 || relLower.indexOf('familia do hans') !== -1) {
+          return {
+            strip: [153, 193, 232],    // #99c1e8
+            relBg: [240, 246, 253],    // #f0f6fd
+            relText: [49, 89, 133],    // #315985
+            relBorder: '#c5dcf3',
+            stripHex: '#99c1e8',
+            relBgHex: '#f0f6fd',
+            relTextHex: '#315985',
+            relFontSize: 8.5
+          };
+        }
+
+        // 8. Amigo(a) do Hans -> Azul-Acqua / Turquesa Pastel (Pastel Aqua/Teal)
+        if (relLower.indexOf('amigo') !== -1 && relLower.indexOf('hans') !== -1) {
+          return {
+            strip: [143, 211, 214],    // #8fd3d6
+            relBg: [238, 250, 250],    // #eefafa
+            relText: [39, 106, 112],   // #276a70
+            relBorder: '#bfe6e8',
+            stripHex: '#8fd3d6',
+            relBgHex: '#eefafa',
+            relTextHex: '#276a70',
+            relFontSize: 8.5
+          };
+        }
+
+        // 9. UBS do Hans -> Azul-Lavanda / Periwinkle Pastel (Pastel Periwinkle)
+        if (relLower.indexOf('ubs') !== -1 && relLower.indexOf('hans') !== -1) {
+          return {
+            strip: [173, 181, 235],    // #adb5eb
+            relBg: [243, 244, 253],    // #f3f4fd
+            relText: [66, 74, 138],    // #424a8a
+            relBorder: '#cfd4f5',
+            stripHex: '#adb5eb',
+            relBgHex: '#f3f4fd',
+            relTextHex: '#424a8a',
+            relFontSize: 8.5
+          };
+        }
+
+        // 10. Amigo de ambos / Conhecido de ambos -> Verde-Menta Pastel (Pastel Mint)
+        if (relLower.indexOf('ambos') !== -1) {
+          return {
+            strip: [157, 212, 184],    // #9dd4b8
+            relBg: [239, 249, 244],    // #eff9f4
+            relText: [53, 105, 79],    // #35694f
+            relBorder: '#c4e6d4',
+            stripHex: '#9dd4b8',
+            relBgHex: '#eff9f4',
+            relTextHex: '#35694f',
+            relFontSize: 8.5
+          };
+        }
+
+        // Fallback if any other custom text mentions Laís or Hans
+        if (relLower.indexOf('laís') !== -1 || relLower.indexOf('lais') !== -1) {
+          return {
+            strip: [242, 167, 187],
+            relBg: [253, 242, 246],
+            relText: [148, 56, 82],
+            relBorder: '#f7cad7',
+            stripHex: '#f2a7bb',
+            relBgHex: '#fdf2f6',
+            relTextHex: '#943852',
+            relFontSize: 8.5
+          };
+        }
+        if (relLower.indexOf('hans') !== -1) {
+          return {
+            strip: [153, 193, 232],
+            relBg: [240, 246, 253],
+            relText: [49, 89, 133],
+            relBorder: '#c5dcf3',
+            stripHex: '#99c1e8',
+            relBgHex: '#f0f6fd',
+            relTextHex: '#315985',
+            relFontSize: 8.5
+          };
+        }
+
+        // 11. Outros / Personalizados -> Areia-Champanhe Pastel (Pastel Warm Sand)
         return {
-          strip: [163, 209, 182],      // Soft Pastel Mint-Sage (#a3d1b6)
-          relBg: [240, 249, 244],      // #f0f9f4
-          relText: [61, 107, 82],      // #3d6b52
-          relBorder: '#c6e4d2',
-          stripHex: '#a3d1b6',
-          relBgHex: '#f0f9f4',
-          relTextHex: '#3d6b52',
+          strip: [219, 199, 168],      // #dbc7a8
+          relBg: [251, 248, 242],      // #fbf8f2
+          relText: [115, 92, 61],      // #735c3d
+          relBorder: '#e8dcc8',
+          stripHex: '#dbc7a8',
+          relBgHex: '#fbf8f2',
+          relTextHex: '#735c3d',
           relFontSize: 8.5
         };
       }
@@ -3303,24 +3417,25 @@
                 }
               }
 
-              // Column 8: "Instagram" — guarantee zero line breaks + style as clickable link when present
+              // Column 8: "Instagram" — guarantee zero line breaks + leave left padding for the vector Instagram icon
               if (data.column.index === 8) {
                 var instaInfo = rowInstaInfos[rowIdx];
                 if (instaInfo) {
                   var handleText = instaInfo.handle;
                   // Force single line in cell.text and dynamically scale font size if username is very long
                   data.cell.text = [handleText];
+                  data.cell.styles.cellPadding = { top: 3.1, right: 2.0, bottom: 3.1, left: 6.8 };
                   var len = handleText.length;
-                  if (len > 26) {
-                    data.cell.styles.fontSize = 6.4;
-                  } else if (len > 22) {
-                    data.cell.styles.fontSize = 7.0;
-                  } else if (len > 18) {
-                    data.cell.styles.fontSize = 7.8;
+                  if (len > 24) {
+                    data.cell.styles.fontSize = 6.2;
+                  } else if (len > 20) {
+                    data.cell.styles.fontSize = 6.9;
+                  } else if (len > 16) {
+                    data.cell.styles.fontSize = 7.6;
                   } else {
-                    data.cell.styles.fontSize = 8.4;
+                    data.cell.styles.fontSize = 8.2;
                   }
-                  data.cell.styles.textColor = [59, 98, 138]; // Soft pastel link blue (#3b628a)
+                  data.cell.styles.textColor = [148, 56, 82]; // Soft pastel rose-plum (#943852) matching the app badge
                   data.cell.styles.fontStyle = 'bold';
                 }
               }
@@ -3337,10 +3452,19 @@
               doc.rect(data.cell.x, data.cell.y, 2.6, data.cell.height, 'F');
             }
 
-            // Add interactive PDF hyperlink over the entire Instagram cell so tapping it opens the Instagram app
+            // Draw vector Instagram icon + add interactive PDF hyperlink over the entire Instagram cell
             if (data.section === 'body' && data.column.index === 8) {
               var instaInfoLink = rowInstaInfos[data.row.index];
               if (instaInfoLink && instaInfoLink.url) {
+                var ix = data.cell.x + 2.1;
+                var iy = data.cell.y + (data.cell.height - 3.4) / 2;
+                doc.setDrawColor(148, 56, 82);
+                doc.setLineWidth(0.32);
+                doc.roundedRect(ix, iy, 3.4, 3.4, 0.85, 0.85, 'S');
+                doc.circle(ix + 1.7, iy + 1.7, 0.82, 'S');
+                doc.setFillColor(148, 56, 82);
+                doc.circle(ix + 2.65, iy + 0.75, 0.22, 'F');
+
                 doc.link(data.cell.x, data.cell.y, data.cell.width, data.cell.height, {
                   url: instaInfoLink.url
                 });
