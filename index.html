@@ -482,14 +482,14 @@
 
             <!-- Nome e Sobrenome do Titular -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label for="input-nome" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
+              <div class="min-w-0">
+                <label for="input-nome" class="block text-xs font-semibold text-[#24331b] mb-1 leading-tight">
                   Nome <span class="text-red-600">*</span>
                 </label>
                 <input id="input-nome" type="text" required placeholder="Ex: Mariana" class="input-wedding" autocomplete="off" />
               </div>
-              <div>
-                <label for="input-sobrenome" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
+              <div class="min-w-0">
+                <label for="input-sobrenome" class="block text-xs font-semibold text-[#24331b] mb-1 leading-tight">
                   Sobrenome <span class="text-red-600">*</span>
                 </label>
                 <input id="input-sobrenome" type="text" required placeholder="Ex: Nogueira" class="input-wedding" autocomplete="off" />
@@ -497,8 +497,8 @@
             </div>
 
             <!-- Relação com os noivos -->
-            <div>
-              <label for="select-relacao" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
+            <div class="min-w-0">
+              <label for="select-relacao" class="block text-xs font-semibold text-[#24331b] mb-1 leading-tight">
                 Relação com os noivos (Laís &amp; Hans) <span class="text-red-600">*</span>
               </label>
               <select id="select-relacao" required class="input-wedding">
@@ -516,16 +516,16 @@
             </div>
 
             <!-- Caixa de texto se Relação = Outros -->
-            <div id="box-relacao-outros" class="hidden">
-              <label for="input-relacao-outros" class="block text-xs font-semibold text-[#854d0e] mb-1 nowrap-strict">
+            <div id="box-relacao-outros" class="hidden min-w-0">
+              <label for="input-relacao-outros" class="block text-xs font-semibold text-[#854d0e] mb-1 leading-tight">
                 Especifique a relação com os noivos <span class="text-red-600">*</span>
               </label>
               <input id="input-relacao-outros" type="text" placeholder="Ex: Fornecedor / Vizinho / Faculdade" class="input-wedding border-[#eab308] bg-[#fffdf5]" />
             </div>
 
             <!-- Se selecionou Acompanhante de convidado avulso, permite vincular ou indicar de quem -->
-            <div id="box-relacao-acomp-vinculo" class="hidden">
-              <label for="input-relacao-acomp-responsavel" class="block text-xs font-semibold text-[#324626] mb-1 nowrap-strict">
+            <div id="box-relacao-acomp-vinculo" class="hidden min-w-0">
+              <label for="input-relacao-acomp-responsavel" class="block text-xs font-semibold text-[#324626] mb-1 leading-tight">
                 Acompanhante de qual convidado? (Opcional)
               </label>
               <input id="input-relacao-acomp-responsavel" type="text" placeholder="Ex: Nome do convidado titular" class="input-wedding bg-[#f6f8f2]" />
@@ -533,8 +533,8 @@
 
             <!-- Cidade (em ordem alfabética: ABC Paulista, Belo Horizonte, Mauá, São Paulo, Sumaré e Outros) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label for="select-cidade" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
+              <div class="min-w-0">
+                <label for="select-cidade" class="block text-xs font-semibold text-[#24331b] mb-1 leading-tight">
                   Cidade <span class="text-red-600">*</span>
                 </label>
                 <select id="select-cidade" required class="input-wedding">
@@ -549,8 +549,8 @@
               </div>
 
               <!-- Padrinho / Madrinha (Sem abreviações) -->
-              <div>
-                <label for="select-padrinho" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
+              <div class="min-w-0">
+                <label for="select-padrinho" class="block text-xs font-semibold text-[#24331b] mb-1 leading-tight">
                   Padrinho ou Madrinha?
                 </label>
                 <select id="select-padrinho" class="input-wedding">
@@ -566,8 +566,8 @@
             </div>
 
             <!-- Caixa de texto se Cidade = Outros -->
-            <div id="box-cidade-outros" class="hidden">
-              <label for="input-cidade-outros" class="block text-xs font-semibold text-[#854d0e] mb-1 nowrap-strict">
+            <div id="box-cidade-outros" class="hidden min-w-0">
+              <label for="input-cidade-outros" class="block text-xs font-semibold text-[#854d0e] mb-1 leading-tight">
                 Especifique a cidade <span class="text-red-600">*</span>
               </label>
               <input id="input-cidade-outros" type="text" placeholder="Ex: Visconde do Rio Branco / Campinas" class="input-wedding border-[#eab308] bg-[#fffdf5]" />
@@ -575,25 +575,25 @@
 
             <!-- Celular/WhatsApp e Instagram (Não obrigatórios) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label for="input-telefone" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
+              <div class="min-w-0">
+                <label for="input-telefone" class="block text-xs font-semibold text-[#24331b] mb-1 leading-tight">
                   Celular / WhatsApp <span class="text-[#6e7a62] font-normal">(opcional)</span>
                 </label>
                 <input id="input-telefone" type="tel" inputmode="numeric" maxlength="15" placeholder="(19) 99999-9999" class="input-wedding font-medium tracking-wide" />
               </div>
-              <div>
-                <label for="input-instagram" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
+              <div class="min-w-0">
+                <label for="input-instagram" class="block text-xs font-semibold text-[#24331b] mb-1 leading-tight">
                   Instagram <span class="text-[#6e7a62] font-normal">(opcional)</span>
                 </label>
-                <input id="input-instagram" type="text" placeholder="Ex: @usuario ou link" class="input-wedding" />
+                <input id="input-instagram" type="text" placeholder="Ex: @usuario" class="input-wedding" />
               </div>
             </div>
 
             <!-- CHECKBOX 1: CRIANÇAS DO CONVIDADO TITULAR -->
-            <div class="rounded-xl border border-[#e3decb] bg-[#faf8f1] p-3 space-y-2.5">
+            <div class="rounded-xl border border-[#e3decb] bg-[#faf8f1] p-3 space-y-2.5 overflow-hidden">
               <label class="flex items-center gap-2.5 cursor-pointer select-none">
-                <input id="chk-titular-criancas" type="checkbox" class="w-4 h-4 rounded text-[#324626] focus:ring-[#506528]" />
-                <span class="text-xs sm:text-sm font-semibold text-[#24331b]">
+                <input id="chk-titular-criancas" type="checkbox" class="w-4 h-4 rounded text-[#324626] focus:ring-[#506528] shrink-0" />
+                <span class="text-xs sm:text-sm font-semibold text-[#24331b] leading-snug">
                   🧸 Levará crianças? <span class="font-normal text-[#66705b]">(Titular)</span>
                 </span>
               </label>
@@ -615,36 +615,39 @@
             </div>
 
             <!-- CHECKBOX 2: ACOMPANHANTE DO CONVIDADO -->
-            <div class="rounded-xl border border-[#cad9b8] bg-[#f4f7ef] p-3 space-y-2.5">
+            <div class="rounded-xl border border-[#cad9b8] bg-[#f4f7ef] p-3 space-y-2.5 overflow-hidden">
               <label class="flex items-center gap-2.5 cursor-pointer select-none">
-                <input id="chk-tem-acompanhante" type="checkbox" class="w-4 h-4 rounded text-[#324626] focus:ring-[#506528]" />
-                <span class="text-xs sm:text-sm font-semibold text-[#24331b]">
+                <input id="chk-tem-acompanhante" type="checkbox" class="w-4 h-4 rounded text-[#324626] focus:ring-[#506528] shrink-0" />
+                <span class="text-xs sm:text-sm font-semibold text-[#24331b] leading-snug">
                   💑 Levará acompanhante? <span class="font-normal text-[#506528]">(+1 adulto no total)</span>
                 </span>
               </label>
 
               <div id="panel-acompanhante" class="hidden pt-2.5 border-t border-[#d8e3c8] space-y-3">
-                <div class="bg-white/90 rounded-lg p-2.5 border border-[#dce6ce] text-[11px] text-[#324626]">
+                <div class="bg-white/90 rounded-lg p-2.5 border border-[#dce6ce] text-[11px] text-[#324626] leading-relaxed">
                   Os dados do acompanhante abaixo são <strong>opcionais</strong> (contabiliza +1 adulto imediatamente e você pode completar ou editar depois). O sobrenome não é preenchido automaticamente.
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <div>
-                    <label for="input-acomp-nome" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
-                      Nome do Acompanhante <span class="text-[#66705b] font-normal">(opcional)</span>
+                <!-- Nome e Sobrenome do Acompanhante (Empilhados em telas estreitas/colunas laterais para nunca sobrepor) -->
+                <div class="grid grid-cols-1 gap-2.5">
+                  <div class="min-w-0">
+                    <label for="input-acomp-nome" class="flex flex-wrap items-baseline justify-between gap-1 text-xs font-semibold text-[#24331b] mb-1 leading-tight">
+                      <span>Nome do Acompanhante</span>
+                      <span class="text-[11px] text-[#66705b] font-normal">(opcional)</span>
                     </label>
                     <input id="input-acomp-nome" type="text" placeholder="Ex: João (ou deixe em branco)" class="input-wedding" autocomplete="off" />
                   </div>
-                  <div>
-                    <label for="input-acomp-sobrenome" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
-                      Sobrenome do Acompanhante <span class="text-[#66705b] font-normal">(opcional)</span>
+                  <div class="min-w-0">
+                    <label for="input-acomp-sobrenome" class="flex flex-wrap items-baseline justify-between gap-1 text-xs font-semibold text-[#24331b] mb-1 leading-tight">
+                      <span>Sobrenome do Acompanhante</span>
+                      <span class="text-[11px] text-[#66705b] font-normal">(opcional)</span>
                     </label>
                     <input id="input-acomp-sobrenome" type="text" placeholder="Ex: Silva (sem auto-preencher)" class="input-wedding" autocomplete="off" />
                   </div>
                 </div>
 
-                <div>
-                  <label for="select-acomp-padrinho" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
+                <div class="min-w-0">
+                  <label for="select-acomp-padrinho" class="block text-xs font-semibold text-[#24331b] mb-1 leading-tight">
                     Acompanhante é Padrinho ou Madrinha?
                   </label>
                   <select id="select-acomp-padrinho" class="input-wedding">
@@ -659,33 +662,35 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <div>
-                    <label for="input-acomp-telefone" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
-                      WhatsApp do Acomp. <span class="text-[#66705b] font-normal">(opcional)</span>
+                  <div class="min-w-0">
+                    <label for="input-acomp-telefone" class="flex flex-wrap items-baseline justify-between gap-1 text-xs font-semibold text-[#24331b] mb-1 leading-tight">
+                      <span>WhatsApp do Acomp.</span>
+                      <span class="text-[11px] text-[#66705b] font-normal">(opcional)</span>
                     </label>
                     <input id="input-acomp-telefone" type="tel" inputmode="numeric" maxlength="15" placeholder="(19) 99999-9999" class="input-wedding font-medium tracking-wide" autocomplete="off" />
                   </div>
-                  <div>
-                    <label for="input-acomp-instagram" class="block text-xs font-semibold text-[#24331b] mb-1 nowrap-strict">
-                      Instagram do Acomp. <span class="text-[#66705b] font-normal">(opcional)</span>
+                  <div class="min-w-0">
+                    <label for="input-acomp-instagram" class="flex flex-wrap items-baseline justify-between gap-1 text-xs font-semibold text-[#24331b] mb-1 leading-tight">
+                      <span>Instagram do Acomp.</span>
+                      <span class="text-[11px] text-[#66705b] font-normal">(opcional)</span>
                     </label>
                     <input id="input-acomp-instagram" type="text" placeholder="Ex: @usuario" class="input-wedding" autocomplete="off" />
                   </div>
                 </div>
 
                 <!-- Acompanhante NÃO leva acompanhante, mas pode levar criança -->
-                <div class="rounded-lg border border-[#e3decb] bg-[#fffdf7] p-2.5 space-y-2">
+                <div class="rounded-lg border border-[#e3decb] bg-[#fffdf7] p-2.5 space-y-2 overflow-hidden">
                   <label class="flex items-center gap-2 cursor-pointer select-none">
-                    <input id="chk-acomp-criancas" type="checkbox" class="w-4 h-4 rounded text-[#324626] focus:ring-[#506528]" />
-                    <span class="text-xs font-semibold text-[#24331b]">
+                    <input id="chk-acomp-criancas" type="checkbox" class="w-4 h-4 rounded text-[#324626] focus:ring-[#506528] shrink-0" />
+                    <span class="text-xs font-semibold text-[#24331b] leading-snug">
                       🧸 Acompanhante levará crianças?
                     </span>
                   </label>
 
                   <div id="panel-acomp-criancas" class="hidden pt-2 border-t border-[#eee8d5] space-y-2">
                     <!-- Checkbox se as crianças do acompanhante são as mesmas do titular -->
-                    <label id="lbl-criancas-mesmas" class="flex items-center gap-2 cursor-pointer select-none bg-[#fef9c3] p-2 rounded-lg border border-[#fde047] text-[11px] text-[#713f12] font-medium">
-                      <input id="chk-criancas-compartilhadas" type="checkbox" class="w-3.5 h-3.5 rounded text-[#854d0e]" />
+                    <label id="lbl-criancas-mesmas" class="flex items-center gap-2 cursor-pointer select-none bg-[#fef9c3] p-2 rounded-lg border border-[#fde047] text-[11px] text-[#713f12] font-medium leading-snug">
+                      <input id="chk-criancas-compartilhadas" type="checkbox" class="w-3.5 h-3.5 rounded text-[#854d0e] shrink-0" />
                       <span>Mesma(s) criança(s) do convidado titular (não duplicar na lista/planilha)</span>
                     </label>
 
@@ -696,7 +701,7 @@
                         </label>
                         <input id="input-qtd-criancas-acomp" type="number" min="1" max="15" value="1" class="w-20 border border-[#cbd5c0] rounded-lg px-2.5 py-1 text-xs font-bold text-center bg-white" />
                       </div>
-                      <p class="text-[10px] text-[#66705b]">
+                      <p class="text-[10px] text-[#66705b] leading-snug">
                         Se informar uma criança com o mesmo nome da criança do titular, o sistema avisa e evita duplicação.
                       </p>
                       <div id="list-criancas-acomp" class="space-y-2">
@@ -710,11 +715,11 @@
 
             <!-- Action Buttons -->
             <div class="pt-1 flex flex-wrap items-center gap-2">
-              <button id="btn-submit-guest" type="submit" class="btn-olive flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm shadow-sm inline-flex items-center justify-center gap-2 nowrap-strict">
+              <button id="btn-submit-guest" type="submit" class="btn-olive flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm shadow-sm inline-flex items-center justify-center gap-2">
                 <span id="btn-submit-icon">➕</span>
                 <span id="btn-submit-label">Adicionar à Lista e Planilha</span>
               </button>
-              <button id="btn-cancel-edit" type="button" class="hidden btn-outline-olive py-2.5 px-4 rounded-xl font-semibold text-sm nowrap-strict">
+              <button id="btn-cancel-edit" type="button" class="hidden btn-outline-olive py-2.5 px-4 rounded-xl font-semibold text-sm">
                 Cancelar
               </button>
             </div>
@@ -1913,16 +1918,16 @@
         for (var i = 0; i < safeCount; i++) {
           var val = currentValues[i] || { nome: '', idade: '' };
           var div = document.createElement('div');
-          div.className = 'child-entry-row grid grid-cols-12 gap-2 items-center bg-white p-2 rounded-lg border border-[#e3decb]';
+          div.className = 'child-entry-row grid grid-cols-12 gap-2 items-end bg-white p-2.5 rounded-lg border border-[#e3decb]';
           div.innerHTML =
-            '<div class="col-span-7 sm:col-span-8">' +
-              '<label class="block text-[10px] font-semibold text-[#506528] mb-0.5 nowrap-strict">' +
+            '<div class="col-span-8 min-w-0">' +
+              '<label class="block text-[10.5px] font-semibold text-[#506528] mb-1 leading-tight truncate">' +
                 escapeHtml(prefixLabel) + ' #' + (i + 1) + ' — Nome (opcional)' +
               '</label>' +
-              '<input type="text" value="' + escapeHtml(val.nome || '') + '" placeholder="Nome da criança (ou em branco)" class="child-name-input input-wedding py-1.5 text-xs" />' +
+              '<input type="text" value="' + escapeHtml(val.nome || '') + '" placeholder="Ex: Pedro (ou em branco)" class="child-name-input input-wedding py-1.5 text-xs" />' +
             '</div>' +
-            '<div class="col-span-5 sm:col-span-4">' +
-              '<label class="block text-[10px] font-semibold text-[#506528] mb-0.5 nowrap-strict">' +
+            '<div class="col-span-4 min-w-0">' +
+              '<label class="block text-[10.5px] font-semibold text-[#506528] mb-1 leading-tight truncate">' +
                 'Idade (anos)' +
               '</label>' +
               '<input type="number" min="0" max="17" value="' + escapeHtml(val.idade !== undefined ? val.idade : '') + '" placeholder="Ex: 4" class="child-age-input input-wedding py-1.5 text-xs" />' +
