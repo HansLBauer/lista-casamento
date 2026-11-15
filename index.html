@@ -791,7 +791,8 @@
                   <th>Cidade</th>
                   <th>Padrinho / Madrinha</th>
                   <th>Faixa Etária</th>
-                  <th>Contato / Instagram</th>
+                  <th>WhatsApp</th>
+                  <th>Instagram</th>
                   <th class="text-right">Ações</th>
                 </tr>
               </thead>
@@ -1834,32 +1835,30 @@
             ageBadgeHtml = '<span class="text-xs font-medium text-[#324626]">Adulto</span>';
           }
 
-          // Contact column (with clickable Instagram link that opens in Instagram app & never wraps)
-          var contactParts = [];
+          // Dedicated WhatsApp column (aligned vertically, with tabular numbers)
+          var phoneHtml = '<span class="text-xs text-[#9ca38f]">—</span>';
           if (r.telefone) {
             var waDigits = String(r.telefone).replace(/\D/g, '');
             if (waDigits.length >= 10) {
               var waHref = 'https://wa.me/55' + waDigits;
-              contactParts.push(
-                '<a href="' + escapeHtml(waHref) + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[#2e462c] hover:text-[#15803d] hover:underline font-medium nowrap-strict" title="Abrir conversa no WhatsApp">' +
+              phoneHtml =
+                '<a href="' + escapeHtml(waHref) + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-[#2e462c] hover:text-[#15803d] hover:underline font-medium tabular-nums nowrap-strict" title="Abrir conversa no WhatsApp">' +
                   '<span>📱</span><span>' + escapeHtml(r.telefone) + '</span>' +
-                '</a>'
-              );
+                '</a>';
             } else {
-              contactParts.push('<span class="nowrap-strict">📱 ' + escapeHtml(r.telefone) + '</span>');
+              phoneHtml = '<span class="inline-flex items-center gap-1.5 text-xs text-[#324626] tabular-nums nowrap-strict"><span>📱</span><span>' + escapeHtml(r.telefone) + '</span></span>';
             }
           }
+
+          // Dedicated Instagram column (aligned vertically right under each other, independent of phone)
+          var instaHtml = '<span class="text-xs text-[#9ca38f]">—</span>';
           var instaObj = parseInstagramInfo(r.instagram);
           if (instaObj) {
-            contactParts.push(
-              '<a href="' + escapeHtml(instaObj.url) + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#fdf2f8] hover:bg-[#fce7f3] text-[#9d174d] border border-[#fbcfe8] font-semibold transition nowrap-strict" title="Abrir perfil no aplicativo do Instagram">' +
+            instaHtml =
+              '<a href="' + escapeHtml(instaObj.url) + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs bg-[#fdf4f6] hover:bg-[#fce7f3] text-[#944258] border border-[#f7ced8] font-semibold transition nowrap-strict" title="Abrir perfil no aplicativo do Instagram">' +
                 '<span>📸</span><span>' + escapeHtml(instaObj.handle) + '</span>' +
-              '</a>'
-            );
+              '</a>';
           }
-          var contactHtml = contactParts.length > 0
-            ? '<div class="text-xs text-[#324626] flex items-center gap-2 nowrap-strict">' + contactParts.join('') + '</div>'
-            : '<span class="text-xs text-[#9ca38f]">—</span>';
 
           // Actions column (Edit & Delete on every row, targeting the group)
           var actionsHtml =
@@ -1896,7 +1895,8 @@
             '<td class="font-medium text-[#24331b]">' + escapeHtml(r.cidade) + '</td>' +
             '<td>' + padrinhoHtml + '</td>' +
             '<td>' + ageBadgeHtml + '</td>' +
-            '<td>' + contactHtml + '</td>' +
+            '<td>' + phoneHtml + '</td>' +
+            '<td>' + instaHtml + '</td>' +
             '<td class="text-right">' + actionsHtml + '</td>';
 
           tbody.appendChild(tr);
