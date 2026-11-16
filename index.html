@@ -593,23 +593,33 @@
               </div>
             </div>
 
-            <!-- CHECKBOX DESPEDIDA DE SOLTEIRO(A) & TRANSFER - TITULAR -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              <div class="rounded-xl border border-[#f5dfb0] bg-[#fefaee] p-3 overflow-hidden">
-                <label class="flex items-center gap-2.5 cursor-pointer select-none">
+            <!-- CHECKBOX DESPEDIDA DE SOLTEIRO(A), TRANSFER & ACOMODAÇÃO - TITULAR -->
+            <div class="grid grid-cols-1 gap-2">
+              <div class="rounded-xl border border-[#f5dfb0] bg-[#fefaee] px-3 py-2.5 overflow-hidden">
+                <label class="flex items-center gap-2.5 cursor-pointer select-none nowrap-strict">
                   <input id="chk-despedida" type="checkbox" class="w-4 h-4 rounded text-[#8c6222] focus:ring-[#f3ce85] shrink-0" />
-                  <span class="text-xs font-semibold text-[#8c6222] leading-snug">
-                    🥂 Convidado(a) p/ Despedida de Solteiro(a)?
+                  <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#8c6222] leading-snug nowrap-strict">
+                    <span>🥂</span><span>Convidado(a) p/ Despedida de Solteiro(a)?</span>
                   </span>
                 </label>
               </div>
-              <div class="rounded-xl border border-[#c5dcf3] bg-[#f0f6fd] p-3 overflow-hidden">
-                <label class="flex items-center gap-2.5 cursor-pointer select-none">
-                  <input id="chk-transfer" type="checkbox" class="w-4 h-4 rounded text-[#315985] focus:ring-[#99c1e8] shrink-0" />
-                  <span class="text-xs font-semibold text-[#315985] leading-snug">
-                    🚐 Vai precisar de Transfer?
-                  </span>
-                </label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div class="rounded-xl border border-[#c5dcf3] bg-[#f0f6fd] px-3 py-2.5 overflow-hidden">
+                  <label class="flex items-center gap-2 cursor-pointer select-none nowrap-strict">
+                    <input id="chk-transfer" type="checkbox" class="w-4 h-4 rounded text-[#315985] focus:ring-[#99c1e8] shrink-0" />
+                    <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#315985] leading-snug nowrap-strict">
+                      <span>🚐</span><span>Precisa de Transfer?</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="rounded-xl border border-[#dccbf2] bg-[#f6f1fd] px-3 py-2.5 overflow-hidden">
+                  <label class="flex items-center gap-2 cursor-pointer select-none nowrap-strict">
+                    <input id="chk-acomodacao" type="checkbox" class="w-4 h-4 rounded text-[#623f91] focus:ring-[#c3a6e8] shrink-0" />
+                    <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#623f91] leading-snug nowrap-strict">
+                      <span>🏨</span><span>Precisa de Acomodação?</span>
+                    </span>
+                  </label>
+                </div>
               </div>
             </div>
 
@@ -702,23 +712,33 @@
                   </div>
                 </div>
 
-                <!-- CHECKBOX DESPEDIDA DE SOLTEIRO(A) & TRANSFER - ACOMPANHANTE -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <div class="rounded-lg border border-[#f5dfb0] bg-[#fefaee] p-2.5 overflow-hidden">
-                    <label class="flex items-center gap-2 cursor-pointer select-none">
+                <!-- CHECKBOX DESPEDIDA DE SOLTEIRO(A), TRANSFER & ACOMODAÇÃO - ACOMPANHANTE -->
+                <div class="grid grid-cols-1 gap-2">
+                  <div class="rounded-lg border border-[#f5dfb0] bg-[#fefaee] px-2.5 py-2 overflow-hidden">
+                    <label class="flex items-center gap-2 cursor-pointer select-none nowrap-strict">
                       <input id="chk-acomp-despedida" type="checkbox" class="w-4 h-4 rounded text-[#8c6222] focus:ring-[#f3ce85] shrink-0" />
-                      <span class="text-xs font-semibold text-[#8c6222] leading-snug">
-                        🥂 Acomp. na Despedida?
+                      <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#8c6222] leading-snug nowrap-strict">
+                        <span>🥂</span><span>Acompanhante na Despedida?</span>
                       </span>
                     </label>
                   </div>
-                  <div class="rounded-lg border border-[#c5dcf3] bg-[#f0f6fd] p-2.5 overflow-hidden">
-                    <label class="flex items-center gap-2 cursor-pointer select-none">
-                      <input id="chk-acomp-transfer" type="checkbox" class="w-4 h-4 rounded text-[#315985] focus:ring-[#99c1e8] shrink-0" />
-                      <span class="text-xs font-semibold text-[#315985] leading-snug">
-                        🚐 Acomp. precisará de Transfer?
-                      </span>
-                    </label>
+                  <div class="grid grid-cols-2 gap-2">
+                    <div class="rounded-lg border border-[#c5dcf3] bg-[#f0f6fd] px-2.5 py-2 overflow-hidden">
+                      <label class="flex items-center gap-1.5 cursor-pointer select-none nowrap-strict">
+                        <input id="chk-acomp-transfer" type="checkbox" class="w-4 h-4 rounded text-[#315985] focus:ring-[#99c1e8] shrink-0" />
+                        <span class="inline-flex items-center gap-1 text-xs font-semibold text-[#315985] leading-snug nowrap-strict">
+                          <span>🚐</span><span>Transfer</span>
+                        </span>
+                      </label>
+                    </div>
+                    <div class="rounded-lg border border-[#dccbf2] bg-[#f6f1fd] px-2.5 py-2 overflow-hidden">
+                      <label class="flex items-center gap-1.5 cursor-pointer select-none nowrap-strict">
+                        <input id="chk-acomp-acomodacao" type="checkbox" class="w-4 h-4 rounded text-[#623f91] focus:ring-[#c3a6e8] shrink-0" />
+                        <span class="inline-flex items-center gap-1 text-xs font-semibold text-[#623f91] leading-snug nowrap-strict">
+                          <span>🏨</span><span>Acomodação</span>
+                        </span>
+                      </label>
+                    </div>
                   </div>
                 </div>
 
@@ -837,12 +857,13 @@
                   <th>Relação</th>
                   <th>Cidade</th>
                   <th>Padrinho / Madrinha</th>
-                  <th>Despedida</th>
+                  <th class="text-center">Despedida</th>
                   <th class="text-center">Transfer</th>
+                  <th class="text-center">Acomodação</th>
                   <th>Faixa Etária</th>
                   <th>WhatsApp</th>
                   <th>Instagram</th>
-                  <th class="text-right">Ações</th>
+                  <th class="text-left">Ações</th>
                 </tr>
               </thead>
               <tbody id="guest-table-body">
@@ -1530,6 +1551,9 @@
             transfer: Boolean(g.transfer),
             transferLabel: g.transfer ? 'Sim' : 'Não',
             transferTarget: 'titular',
+            acomodacao: Boolean(g.acomodacao),
+            acomodacaoLabel: g.acomodacao ? 'Sim' : 'Não',
+            acomodacaoTarget: 'titular',
             kidIndex: -1,
             telefone: formatPhoneBR(g.telefone || ''),
             instagram: g.instagram || '',
@@ -1569,6 +1593,9 @@
               transfer: acompObj.transfer !== undefined ? Boolean(acompObj.transfer) : Boolean(g.transfer),
               transferLabel: (acompObj.transfer !== undefined ? Boolean(acompObj.transfer) : Boolean(g.transfer)) ? 'Sim' : 'Não',
               transferTarget: 'acomp',
+              acomodacao: acompObj.acomodacao !== undefined ? Boolean(acompObj.acomodacao) : Boolean(g.acomodacao),
+              acomodacaoLabel: (acompObj.acomodacao !== undefined ? Boolean(acompObj.acomodacao) : Boolean(g.acomodacao)) ? 'Sim' : 'Não',
+              acomodacaoTarget: 'acomp',
               kidIndex: -1,
               telefone: formatPhoneBR(acompObj.telefone || ''),
               instagram: acompObj.instagram || '',
@@ -1618,6 +1645,9 @@
                 transfer: kid.transfer !== undefined ? Boolean(kid.transfer) : Boolean(g.transfer),
                 transferLabel: (kid.transfer !== undefined ? Boolean(kid.transfer) : Boolean(g.transfer)) ? 'Sim' : 'Não',
                 transferTarget: 'kid_titular',
+                acomodacao: kid.acomodacao !== undefined ? Boolean(kid.acomodacao) : Boolean(g.acomodacao),
+                acomodacaoLabel: (kid.acomodacao !== undefined ? Boolean(kid.acomodacao) : Boolean(g.acomodacao)) ? 'Sim' : 'Não',
+                acomodacaoTarget: 'kid_titular',
                 kidIndex: idx,
                 telefone: '',
                 instagram: '',
@@ -1682,6 +1712,9 @@
                 transfer: kid.transfer !== undefined ? Boolean(kid.transfer) : (acompObj.transfer !== undefined ? Boolean(acompObj.transfer) : Boolean(g.transfer)),
                 transferLabel: (kid.transfer !== undefined ? Boolean(kid.transfer) : (acompObj.transfer !== undefined ? Boolean(acompObj.transfer) : Boolean(g.transfer))) ? 'Sim' : 'Não',
                 transferTarget: 'kid_acomp',
+                acomodacao: kid.acomodacao !== undefined ? Boolean(kid.acomodacao) : (acompObj.acomodacao !== undefined ? Boolean(acompObj.acomodacao) : Boolean(g.acomodacao)),
+                acomodacaoLabel: (kid.acomodacao !== undefined ? Boolean(kid.acomodacao) : (acompObj.acomodacao !== undefined ? Boolean(acompObj.acomodacao) : Boolean(g.acomodacao))) ? 'Sim' : 'Não',
+                acomodacaoTarget: 'kid_acomp',
                 kidIndex: idx,
                 telefone: '',
                 instagram: '',
@@ -1721,6 +1754,8 @@
           madrinhasAmbos: 0,
           totalPadrinhosMadrinhas: 0,
           totalDespedida: 0,
+          totalTransfer: 0,
+          totalAcomodacao: 0,
           porCidade: {}
         };
 
@@ -1754,6 +1789,12 @@
 
           if (r.despedida) {
             stats.totalDespedida++;
+          }
+          if (r.transfer) {
+            stats.totalTransfer++;
+          }
+          if (r.acomodacao) {
+            stats.totalAcomodacao++;
           }
 
           // Padrinhos / Madrinhas count
@@ -1859,7 +1900,8 @@
             var matchAny = groupRows.some(function (r) {
               var hay = normalizeFullText(
                 r.nomeExibicao + ' ' + r.indicadorVinculo + ' ' + r.relacao + ' ' +
-                r.cidade + ' ' + r.padrinho + ' ' + r.telefone + ' ' + r.instagram
+                r.cidade + ' ' + r.padrinho + ' ' + r.telefone + ' ' + r.instagram + ' ' +
+                (r.transfer ? 'transfer' : '') + ' ' + (r.acomodacao ? 'acomodacao hospedagem' : '')
               );
               return hay.indexOf(searchVal) !== -1;
             });
@@ -1902,22 +1944,33 @@
           }
 
           // Despedida de Solteiro(a) badge
-          var despedidaHtml = '<span class="text-xs text-[#6e7a62]">Não</span>';
+          var despedidaHtml = '<span class="text-xs text-[#6e7a62] nowrap-strict">Não</span>';
           if (r.roleCode.indexOf('CRIANCA') === 0) {
-            despedidaHtml = '<span class="text-xs text-[#9ca38f]">—</span>';
+            despedidaHtml = '<span class="text-xs text-[#9ca38f] nowrap-strict">—</span>';
           } else if (r.despedida) {
-            despedidaHtml = '<span class="badge-pill bg-[#f0f9f4] text-[#3d6b52] border border-[#c6e4d2]">🥂 Sim</span>';
+            despedidaHtml = '<span class="badge-pill bg-[#f0f9f4] text-[#3d6b52] border border-[#c6e4d2] nowrap-strict"><span>🥂</span><span>Sim</span></span>';
           }
 
-          // Interactive Transfer checkbox directly inside the list row for one-click add/remove
+          // Interactive Transfer checkbox directly inside the list row for one-click add/remove (no line breaks)
           var transferHtml =
             '<label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full cursor-pointer select-none transition nowrap-strict ' +
               (r.transfer
                 ? 'bg-[#f0f6fd] text-[#315985] border border-[#c5dcf3] font-semibold'
                 : 'bg-[#faf8f1] text-[#6e7a62] border border-[#e3decb] hover:bg-[#f2efe4]') +
               '" title="Marcar ou desmarcar Transfer para esta pessoa">' +
-              '<input type="checkbox" data-action="toggle-transfer" data-group-id="' + escapeHtml(r.groupId) + '" data-transfer-target="' + escapeHtml(r.transferTarget) + '" data-kid-index="' + String(r.kidIndex) + '" class="w-3.5 h-3.5 rounded text-[#315985] focus:ring-[#99c1e8] cursor-pointer" ' + (r.transfer ? 'checked' : '') + ' />' +
-              '<span class="text-xs">' + (r.transfer ? '🚐 Sim' : 'Não') + '</span>' +
+              '<input type="checkbox" data-action="toggle-transfer" data-group-id="' + escapeHtml(r.groupId) + '" data-transfer-target="' + escapeHtml(r.transferTarget) + '" data-kid-index="' + String(r.kidIndex) + '" class="w-3.5 h-3.5 rounded text-[#315985] focus:ring-[#99c1e8] cursor-pointer shrink-0" ' + (r.transfer ? 'checked' : '') + ' />' +
+              '<span class="inline-flex items-center gap-1 text-xs nowrap-strict">' + (r.transfer ? '<span>🚐</span><span>Sim</span>' : '<span>Não</span>') + '</span>' +
+            '</label>';
+
+          // Interactive Acomodação checkbox directly inside the list row for one-click add/remove (no line breaks)
+          var acomodacaoHtml =
+            '<label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full cursor-pointer select-none transition nowrap-strict ' +
+              (r.acomodacao
+                ? 'bg-[#f6f1fd] text-[#623f91] border border-[#dccbf2] font-semibold'
+                : 'bg-[#faf8f1] text-[#6e7a62] border border-[#e3decb] hover:bg-[#f2efe4]') +
+              '" title="Marcar ou desmarcar Acomodação para esta pessoa">' +
+              '<input type="checkbox" data-action="toggle-acomodacao" data-group-id="' + escapeHtml(r.groupId) + '" data-acomodacao-target="' + escapeHtml(r.acomodacaoTarget) + '" data-kid-index="' + String(r.kidIndex) + '" class="w-3.5 h-3.5 rounded text-[#623f91] focus:ring-[#c3a6e8] cursor-pointer shrink-0" ' + (r.acomodacao ? 'checked' : '') + ' />' +
+              '<span class="inline-flex items-center gap-1 text-xs nowrap-strict">' + (r.acomodacao ? '<span>🏨</span><span>Sim</span>' : '<span>Não</span>') + '</span>' +
             '</label>';
 
           // Age / Classification badge
@@ -1963,17 +2016,17 @@
               '</a>';
           }
 
-          // Actions column (Edit & Delete on every row, targeting the group)
+          // Actions column (All "Editar" buttons strictly aligned in the exact same first sub-column)
           var actionsHtml =
-            '<div class="flex items-center justify-end gap-1.5 nowrap-strict">' +
-              '<button type="button" data-action="edit" data-group-id="' + escapeHtml(r.groupId) + '" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-[#fef9c3] hover:bg-[#fde047] text-[#713f12] border border-[#eab308] transition">' +
-                '✏️ Editar' +
+            '<div class="inline-grid grid-cols-[78px_88px] items-center justify-start gap-1.5 nowrap-strict">' +
+              '<button type="button" data-action="edit" data-group-id="' + escapeHtml(r.groupId) + '" class="w-[78px] inline-flex items-center justify-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-[#fef9c3] hover:bg-[#fde047] text-[#713f12] border border-[#eab308] transition nowrap-strict">' +
+                '<span>✏️</span><span>Editar</span>' +
               '</button>' +
               (isTitular
-                ? '<button type="button" data-action="delete" data-group-id="' + escapeHtml(r.groupId) + '" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 transition">' +
-                    '🗑️ Remover' +
+                ? '<button type="button" data-action="delete" data-group-id="' + escapeHtml(r.groupId) + '" class="w-[88px] inline-flex items-center justify-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 transition nowrap-strict">' +
+                    '<span>🗑️</span><span>Remover</span>' +
                   '</button>'
-                : '') +
+                : '<span class="inline-block w-[88px] h-1 pointer-events-none select-none" aria-hidden="true"></span>') +
             '</div>';
 
           var relDisplay = r.pdfRelacao || r.relacao;
@@ -1997,12 +2050,13 @@
             '</td>' +
             '<td class="font-medium text-[#24331b]">' + escapeHtml(r.cidade) + '</td>' +
             '<td>' + padrinhoHtml + '</td>' +
-            '<td>' + despedidaHtml + '</td>' +
+            '<td class="text-center">' + despedidaHtml + '</td>' +
             '<td class="text-center">' + transferHtml + '</td>' +
+            '<td class="text-center">' + acomodacaoHtml + '</td>' +
             '<td>' + ageBadgeHtml + '</td>' +
             '<td>' + phoneHtml + '</td>' +
             '<td>' + instaHtml + '</td>' +
-            '<td class="text-right">' + actionsHtml + '</td>';
+            '<td class="text-left">' + actionsHtml + '</td>';
 
           tbody.appendChild(tr);
         });
@@ -2020,10 +2074,12 @@
             var nInput = row.querySelector('.child-name-input');
             var aInput = row.querySelector('.child-age-input');
             var tInput = row.querySelector('.child-transfer-input');
+            var acInput = row.querySelector('.child-acomodacao-input');
             currentValues.push({
               nome: nInput ? nInput.value : '',
               idade: aInput ? aInput.value : '',
-              transfer: tInput ? tInput.checked : false
+              transfer: tInput ? tInput.checked : false,
+              acomodacao: acInput ? acInput.checked : false
             });
           });
         }
@@ -2032,26 +2088,32 @@
         var safeCount = Math.max(1, Math.min(15, parseInt(count, 10) || 1));
 
         for (var i = 0; i < safeCount; i++) {
-          var val = currentValues[i] || { nome: '', idade: '', transfer: false };
+          var val = currentValues[i] || { nome: '', idade: '', transfer: false, acomodacao: false };
           var div = document.createElement('div');
-          div.className = 'child-entry-row grid grid-cols-12 gap-2 items-end bg-white p-2.5 rounded-lg border border-[#e3decb]';
+          div.className = 'child-entry-row space-y-2 bg-white p-2.5 rounded-lg border border-[#e3decb]';
           div.innerHTML =
-            '<div class="col-span-6 min-w-0">' +
-              '<label class="block text-[10.5px] font-semibold text-[#506528] mb-1 leading-tight truncate">' +
-                escapeHtml(prefixLabel) + ' #' + (i + 1) + ' — Nome (opcional)' +
-              '</label>' +
-              '<input type="text" value="' + escapeHtml(val.nome || '') + '" placeholder="Ex: Pedro (ou em branco)" class="child-name-input input-wedding py-1.5 text-xs" />' +
+            '<div class="grid grid-cols-12 gap-2 items-end">' +
+              '<div class="col-span-8 min-w-0">' +
+                '<label class="block text-[10.5px] font-semibold text-[#506528] mb-1 leading-tight truncate">' +
+                  escapeHtml(prefixLabel) + ' #' + (i + 1) + ' — Nome (opcional)' +
+                '</label>' +
+                '<input type="text" value="' + escapeHtml(val.nome || '') + '" placeholder="Ex: Pedro (ou em branco)" class="child-name-input input-wedding py-1.5 text-xs" />' +
+              '</div>' +
+              '<div class="col-span-4 min-w-0">' +
+                '<label class="block text-[10.5px] font-semibold text-[#506528] mb-1 leading-tight nowrap-strict">' +
+                  'Idade (anos)' +
+                '</label>' +
+                '<input type="number" min="0" max="17" value="' + escapeHtml(val.idade !== undefined ? val.idade : '') + '" placeholder="Ex: 4" class="child-age-input input-wedding py-1.5 text-xs" />' +
+              '</div>' +
             '</div>' +
-            '<div class="col-span-3 min-w-0">' +
-              '<label class="block text-[10.5px] font-semibold text-[#506528] mb-1 leading-tight truncate">' +
-                'Idade (anos)' +
+            '<div class="grid grid-cols-2 gap-2 pt-0.5">' +
+              '<label class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-[#c5dcf3] bg-[#f0f6fd] cursor-pointer select-none text-xs font-semibold text-[#315985] nowrap-strict">' +
+                '<input type="checkbox" class="child-transfer-input w-3.5 h-3.5 rounded text-[#315985] focus:ring-[#99c1e8] shrink-0" ' + (val.transfer ? 'checked' : '') + ' />' +
+                '<span class="inline-flex items-center gap-1 nowrap-strict"><span>🚐</span><span>Transfer</span></span>' +
               '</label>' +
-              '<input type="number" min="0" max="17" value="' + escapeHtml(val.idade !== undefined ? val.idade : '') + '" placeholder="Ex: 4" class="child-age-input input-wedding py-1.5 text-xs" />' +
-            '</div>' +
-            '<div class="col-span-3 min-w-0 flex items-center justify-center pb-1.5">' +
-              '<label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-[11px] font-semibold text-[#315985]">' +
-                '<input type="checkbox" class="child-transfer-input w-3.5 h-3.5 rounded text-[#315985]" ' + (val.transfer ? 'checked' : '') + ' />' +
-                '<span>🚐 Transfer</span>' +
+              '<label class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-[#dccbf2] bg-[#f6f1fd] cursor-pointer select-none text-xs font-semibold text-[#623f91] nowrap-strict">' +
+                '<input type="checkbox" class="child-acomodacao-input w-3.5 h-3.5 rounded text-[#623f91] focus:ring-[#c3a6e8] shrink-0" ' + (val.acomodacao ? 'checked' : '') + ' />' +
+                '<span class="inline-flex items-center gap-1 nowrap-strict"><span>🏨</span><span>Acomodação</span></span>' +
               '</label>' +
             '</div>';
           container.appendChild(div);
@@ -2067,11 +2129,13 @@
           var nInput = row.querySelector('.child-name-input');
           var aInput = row.querySelector('.child-age-input');
           var tInput = row.querySelector('.child-transfer-input');
+          var acInput = row.querySelector('.child-acomodacao-input');
           list.push({
             id: 'kid_' + idx + '_' + Date.now(),
             nome: nInput ? nInput.value.trim() : '',
             idade: aInput ? aInput.value.trim() : '',
-            transfer: tInput ? Boolean(tInput.checked) : false
+            transfer: tInput ? Boolean(tInput.checked) : false,
+            acomodacao: acInput ? Boolean(acInput.checked) : false
           });
         });
         return list;
@@ -2225,6 +2289,7 @@
         document.getElementById('input-instagram').value = g.instagram || '';
         document.getElementById('chk-despedida').checked = Boolean(g.despedida);
         document.getElementById('chk-transfer').checked = Boolean(g.transfer);
+        document.getElementById('chk-acomodacao').checked = Boolean(g.acomodacao);
 
         // Titular children
         var chkTitularKids = document.getElementById('chk-titular-criancas');
@@ -2258,6 +2323,7 @@
           document.getElementById('input-acomp-instagram').value = ac.instagram || '';
           document.getElementById('chk-acomp-despedida').checked = Boolean(ac.despedida);
           document.getElementById('chk-acomp-transfer').checked = ac.transfer !== undefined ? Boolean(ac.transfer) : Boolean(g.transfer);
+          document.getElementById('chk-acomp-acomodacao').checked = ac.acomodacao !== undefined ? Boolean(ac.acomodacao) : Boolean(g.acomodacao);
 
           var chkAcompKids = document.getElementById('chk-acomp-criancas');
           var panelAcompKids = document.getElementById('panel-acomp-criancas');
@@ -2288,6 +2354,7 @@
           document.getElementById('input-acomp-instagram').value = '';
           document.getElementById('chk-acomp-despedida').checked = false;
           document.getElementById('chk-acomp-transfer').checked = false;
+          document.getElementById('chk-acomp-acomodacao').checked = false;
           document.getElementById('chk-acomp-criancas').checked = false;
           document.getElementById('panel-acomp-criancas').classList.add('hidden');
           document.getElementById('chk-criancas-compartilhadas').checked = false;
@@ -2374,6 +2441,7 @@
         var padrinho = document.getElementById('select-padrinho').value || 'Não';
         var despedida = document.getElementById('chk-despedida').checked;
         var transfer = document.getElementById('chk-transfer').checked;
+        var acomodacao = document.getElementById('chk-acomodacao').checked;
         var telefone = formatPhoneBR(document.getElementById('input-telefone').value.trim());
         var instagram = document.getElementById('input-instagram').value.trim();
 
@@ -2386,6 +2454,7 @@
         var acompPadrinho = document.getElementById('select-acomp-padrinho').value || 'Não';
         var acompDespedida = temAcompanhante && document.getElementById('chk-acomp-despedida').checked;
         var acompTransfer = temAcompanhante && document.getElementById('chk-acomp-transfer').checked;
+        var acompAcomodacao = temAcompanhante && document.getElementById('chk-acomp-acomodacao').checked;
         var acompTelefone = formatPhoneBR(document.getElementById('input-acomp-telefone').value.trim());
         var acompInstagram = document.getElementById('input-acomp-instagram').value.trim();
         var temCriancasAcomp = temAcompanhante && document.getElementById('chk-acomp-criancas').checked;
@@ -2406,6 +2475,7 @@
           padrinho: padrinho,
           despedida: despedida,
           transfer: transfer,
+          acomodacao: acomodacao,
           telefone: telefone,
           instagram: instagram,
           temCriancasTitular: temCriancasTitular,
@@ -2417,6 +2487,7 @@
             padrinho: acompPadrinho,
             despedida: acompDespedida,
             transfer: acompTransfer,
+            acomodacao: acompAcomodacao,
             telefone: acompTelefone,
             instagram: acompInstagram,
             temCriancasAcomp: temCriancasAcomp,
@@ -3334,8 +3405,8 @@
         // Summary KPI Cards Row in PDF (Clean, Uniform Spacing, No Abbreviations)
         var cardY = 32;
         var cardH = 18;
-        var cardGap = 3.5;
-        var cardW = (297 - 28 - (cardGap * 4)) / 5;
+        var cardGap = 3.2;
+        var cardW = (297 - 24 - (cardGap * 4)) / 5;
 
         var summaryCards = [
           {
@@ -3354,9 +3425,9 @@
             sub: stats.criancas6Plus + ' com 6 anos ou mais (adultos)'
           },
           {
-            title: 'TOTAL GERAL NO EVENTO',
-            main: stats.totalGeral + ' pessoas ao todo',
-            sub: 'Adultos: ' + stats.totalAdultos + '  |  Criancas: ' + stats.totalCriancas
+            title: 'TOTAL GERAL & LOGISTICA',
+            main: stats.totalGeral + ' pessoas (' + stats.totalAdultos + ' ad. / ' + stats.totalCriancas + ' cr.)',
+            sub: 'Transfer: ' + stats.totalTransfer + '  |  Acomodacao: ' + stats.totalAcomodacao
           },
           {
             title: 'POR LADO & PADRINHOS / MADRINHAS',
@@ -3367,7 +3438,7 @@
         ];
 
         summaryCards.forEach(function (c, i) {
-          var x = 14 + i * (cardW + cardGap);
+          var x = 12 + i * (cardW + cardGap);
           doc.setFillColor(251, 249, 245); // Soft pastel warm ivory (#fbf9f5)
           doc.setDrawColor(224, 219, 206); // Soft pastel border (#e0dbce)
           doc.roundedRect(x, cardY, cardW, cardH, 2, 2, 'FD');
@@ -3378,7 +3449,7 @@
           doc.text(c.title, x + 3, cardY + 5);
 
           doc.setFont('helvetica', 'bold');
-          doc.setFontSize(9.5);
+          doc.setFontSize(9.2);
           doc.setTextColor(52, 64, 50); // Soft charcoal-olive value (#344032)
           doc.text(c.main, x + 3, cardY + 11);
 
@@ -3388,8 +3459,8 @@
           doc.text(c.sub, x + 3, cardY + 15.8);
         });
 
-        // Build 10-column table including "Despedida" and "Transfer":
-        // # | Nome e Sobrenome | Relação | Cidade | Vínculo / Padrinho | Despedida | Transfer | Idade | WhatsApp | Instagram
+        // Build 11-column table including "Despedida", "Transfer" and "Acomodação":
+        // # | Nome e Sobrenome | Relação | Cidade | Vínculo / Padrinho | Despedida | Transfer | Acomodação | Idade | WhatsApp | Instagram
         var rowInstaInfos = [];
         var tableBody = rows.map(function (r) {
           var whatsappFormatted = r.telefone ? formatPhoneBR(r.telefone) : '-';
@@ -3398,6 +3469,7 @@
           var instaFormatted = instaInfo ? instaInfo.handle : '-';
           var despedidaFormatted = r.roleCode.indexOf('CRIANCA') === 0 ? '-' : (r.despedida ? 'Sim' : 'Não');
           var transferFormatted = r.transfer ? 'Sim' : 'Não';
+          var acomodacaoFormatted = r.acomodacao ? 'Sim' : 'Não';
           return [
             String(r.rowNum),
             r.nomeExibicao,
@@ -3406,6 +3478,7 @@
             r.pdfVinculo || 'Não',
             despedidaFormatted,
             transferFormatted,
+            acomodacaoFormatted,
             r.pdfIdade || '-',
             whatsappFormatted,
             instaFormatted
@@ -3413,12 +3486,12 @@
         });
 
         if (tableBody.length === 0) {
-          tableBody.push(['-', 'Nenhum convidado cadastrado no momento', '-', '-', '-', '-', '-', '-', '-', '-']);
+          tableBody.push(['-', 'Nenhum convidado cadastrado no momento', '-', '-', '-', '-', '-', '-', '-', '-', '-']);
         }
 
         doc.autoTable({
           startY: 54,
-          margin: { left: 14, right: 14, top: 14, bottom: 12 },
+          margin: { left: 12, right: 12, top: 14, bottom: 12 },
           head: [[
             '#',
             'Nome e Sobrenome',
@@ -3427,6 +3500,7 @@
             'Vínculo / Padrinho',
             'Despedida',
             'Transfer',
+            'Acomodação',
             'Idade',
             'WhatsApp',
             'Instagram'
@@ -3435,8 +3509,8 @@
           theme: 'grid',
           styles: {
             font: 'helvetica',
-            fontSize: 8.4,
-            cellPadding: { top: 3.0, right: 2.3, bottom: 3.0, left: 2.5 },
+            fontSize: 8.1,
+            cellPadding: { top: 2.8, right: 1.8, bottom: 2.8, left: 2.0 },
             textColor: [58, 56, 52],
             fillColor: [252, 250, 247], // Soft pastel cream-ivory row background (#fcfaf7)
             lineColor: [232, 228, 220], // Soft pastel warm border (#e8e4dc)
@@ -3448,26 +3522,30 @@
             fillColor: [98, 124, 94],   // Soft Pastel Sage-Olive Table Header (#627c5e)
             textColor: [255, 255, 255],
             fontStyle: 'bold',
-            fontSize: 8.4,
+            fontSize: 8.0,
             halign: 'left',
             valign: 'middle',
-            cellPadding: { top: 3.2, right: 2.3, bottom: 3.2, left: 2.5 }
+            cellPadding: { top: 3.0, right: 1.4, bottom: 3.0, left: 1.4 }
           },
           columnStyles: {
-            0: { halign: 'center', cellWidth: 8, textColor: [75, 75, 75] },
-            1: { cellWidth: 43, cellPadding: { top: 3.0, right: 2.3, bottom: 3.0, left: 4.6 } },
-            2: { cellWidth: 36, fontStyle: 'bold' },
-            3: { cellWidth: 28 },
-            4: { cellWidth: 36 },
-            5: { halign: 'center', cellWidth: 18 },
-            6: { halign: 'center', cellWidth: 16 },
-            7: { halign: 'center', cellWidth: 14 },
-            8: { cellWidth: 31, overflow: 'ellipsize' },
-            9: { cellWidth: 39, overflow: 'ellipsize', cellPadding: { top: 3.0, right: 1.8, bottom: 3.0, left: 2.2 } }
+            0: { halign: 'center', cellWidth: 8, textColor: [75, 75, 75], overflow: 'ellipsize', cellPadding: { top: 2.8, right: 1.0, bottom: 2.8, left: 1.0 } },
+            1: { cellWidth: 39, cellPadding: { top: 2.8, right: 2.0, bottom: 2.8, left: 4.4 } },
+            2: { cellWidth: 32, fontStyle: 'bold' },
+            3: { cellWidth: 24 },
+            4: { cellWidth: 31 },
+            5: { halign: 'center', cellWidth: 21, overflow: 'ellipsize', cellPadding: { top: 2.8, right: 1.2, bottom: 2.8, left: 1.2 } },
+            6: { halign: 'center', cellWidth: 19, overflow: 'ellipsize', cellPadding: { top: 2.8, right: 1.2, bottom: 2.8, left: 1.2 } },
+            7: { halign: 'center', cellWidth: 24, overflow: 'ellipsize', cellPadding: { top: 2.8, right: 1.2, bottom: 2.8, left: 1.2 } },
+            8: { halign: 'center', cellWidth: 16, overflow: 'ellipsize', cellPadding: { top: 2.8, right: 1.2, bottom: 2.8, left: 1.2 } },
+            9: { cellWidth: 27, overflow: 'ellipsize', cellPadding: { top: 2.8, right: 1.4, bottom: 2.8, left: 1.6 } },
+            10: { cellWidth: 32, overflow: 'ellipsize', cellPadding: { top: 2.8, right: 1.5, bottom: 2.8, left: 2.0 } }
           },
           didParseCell: function (data) {
-            if (data.section === 'head' && (data.column.index === 0 || data.column.index === 5 || data.column.index === 6 || data.column.index === 7)) {
-              data.cell.styles.halign = 'center';
+            if (data.section === 'head') {
+              data.cell.text = [String(data.cell.raw || '')];
+              if (data.column.index === 0 || data.column.index === 5 || data.column.index === 6 || data.column.index === 7 || data.column.index === 8) {
+                data.cell.styles.halign = 'center';
+              }
             }
             if (data.section === 'body') {
               var rowIdx = data.row.index;
@@ -3483,8 +3561,9 @@
                 data.cell.styles.fontSize = theme.relFontSize;
               }
 
-              // Column 5: "Despedida" — highlight "Sim" in soft pastel mint
+              // Column 5: "Despedida" — highlight "Sim" in soft pastel mint (never break line)
               if (data.column.index === 5) {
+                data.cell.text = [String(data.cell.raw || '-')];
                 if (rObj.despedida) {
                   data.cell.styles.fillColor = [240, 249, 244]; // Soft pastel mint (#f0f9f4)
                   data.cell.styles.textColor = [61, 107, 82];   // Deep sage-mint (#3d6b52)
@@ -3494,8 +3573,9 @@
                 }
               }
 
-              // Column 6: "Transfer" — highlight "Sim" in soft pastel sky blue
+              // Column 6: "Transfer" — highlight "Sim" in soft pastel sky blue (never break line)
               if (data.column.index === 6) {
+                data.cell.text = [String(data.cell.raw || 'Não')];
                 if (rObj.transfer) {
                   data.cell.styles.fillColor = [240, 246, 253]; // Soft pastel sky blue (#f0f6fd)
                   data.cell.styles.textColor = [49, 89, 133];   // Deep pastel blue (#315985)
@@ -3505,23 +3585,35 @@
                 }
               }
 
-              // Column 9: "Instagram" — guarantee zero line breaks + leave left padding for the vector Instagram icon
-              if (data.column.index === 9) {
+              // Column 7: "Acomodação" — highlight "Sim" in soft pastel lavender/orchid (never break line)
+              if (data.column.index === 7) {
+                data.cell.text = [String(data.cell.raw || 'Não')];
+                if (rObj.acomodacao) {
+                  data.cell.styles.fillColor = [246, 241, 253]; // Soft pastel orchid (#f6f1fd)
+                  data.cell.styles.textColor = [98, 63, 145];   // Deep plum-violet (#623f91)
+                  data.cell.styles.fontStyle = 'bold';
+                } else {
+                  data.cell.styles.textColor = [130, 136, 124];
+                }
+              }
+
+              // Column 10: "Instagram" — guarantee zero line breaks + leave left padding for the vector Instagram icon
+              if (data.column.index === 10) {
                 var instaInfo = rowInstaInfos[rowIdx];
                 if (instaInfo) {
                   var handleText = instaInfo.handle;
                   // Force single line in cell.text and dynamically scale font size if username is very long
                   data.cell.text = [handleText];
-                  data.cell.styles.cellPadding = { top: 3.0, right: 1.8, bottom: 3.0, left: 6.5 };
+                  data.cell.styles.cellPadding = { top: 2.8, right: 1.5, bottom: 2.8, left: 6.2 };
                   var len = handleText.length;
                   if (len > 24) {
-                    data.cell.styles.fontSize = 6.1;
+                    data.cell.styles.fontSize = 5.8;
                   } else if (len > 20) {
-                    data.cell.styles.fontSize = 6.8;
+                    data.cell.styles.fontSize = 6.4;
                   } else if (len > 16) {
-                    data.cell.styles.fontSize = 7.5;
+                    data.cell.styles.fontSize = 7.0;
                   } else {
-                    data.cell.styles.fontSize = 8.1;
+                    data.cell.styles.fontSize = 7.7;
                   }
                   data.cell.styles.textColor = [148, 56, 82]; // Soft pastel rose-plum (#943852) matching the app badge
                   data.cell.styles.fontStyle = 'bold';
@@ -3541,7 +3633,7 @@
             }
 
             // Draw vector Instagram icon + add interactive PDF hyperlink over the entire Instagram cell
-            if (data.section === 'body' && data.column.index === 9) {
+            if (data.section === 'body' && data.column.index === 10) {
               var instaInfoLink = rowInstaInfos[data.row.index];
               if (instaInfoLink && instaInfoLink.url) {
                 var ix = data.cell.x + 1.9;
@@ -3687,6 +3779,9 @@
             }
             if (personRow.transfer) {
               obsParts.push('Precisa de Transfer');
+            }
+            if (personRow.acomodacao) {
+              obsParts.push('Precisa de Acomodação');
             }
             var instaInfo = parseInstagramInfo(personRow.instagram);
             if (instaInfo) {
@@ -3982,7 +4077,7 @@
 
       function buildServiceWorkerJsString() {
         return [
-          "const CACHE_NAME = 'casamento-lais-hans-v6';",
+          "const CACHE_NAME = 'casamento-lais-hans-v7';",
           "self.addEventListener('install', (event) => {",
           "  self.skipWaiting();",
           "});",
@@ -4236,32 +4331,62 @@
         });
 
         document.getElementById('guest-table-body').addEventListener('change', function (e) {
-          var chk = e.target.closest('input[data-action="toggle-transfer"]');
-          if (!chk) return;
-          var groupId = chk.getAttribute('data-group-id');
-          var targetType = chk.getAttribute('data-transfer-target');
-          var kidIdx = parseInt(chk.getAttribute('data-kid-index'), 10);
-          var isChecked = Boolean(chk.checked);
+          var chkTransfer = e.target.closest('input[data-action="toggle-transfer"]');
+          if (chkTransfer) {
+            var groupId = chkTransfer.getAttribute('data-group-id');
+            var targetType = chkTransfer.getAttribute('data-transfer-target');
+            var kidIdx = parseInt(chkTransfer.getAttribute('data-kid-index'), 10);
+            var isChecked = Boolean(chkTransfer.checked);
 
-          var g = guestGroups.find(function (item) { return item.id === groupId; });
-          if (!g) return;
+            var g = guestGroups.find(function (item) { return item.id === groupId; });
+            if (!g) return;
 
-          if (targetType === 'titular') {
-            g.transfer = isChecked;
-          } else if (targetType === 'acomp') {
-            if (!g.acompanhante) g.acompanhante = {};
-            g.acompanhante.transfer = isChecked;
-          } else if (targetType === 'kid_titular' && Array.isArray(g.criancasTitular) && g.criancasTitular[kidIdx]) {
-            g.criancasTitular[kidIdx].transfer = isChecked;
-          } else if (targetType === 'kid_acomp' && g.acompanhante && Array.isArray(g.acompanhante.criancasAcomp) && g.acompanhante.criancasAcomp[kidIdx]) {
-            g.acompanhante.criancasAcomp[kidIdx].transfer = isChecked;
+            if (targetType === 'titular') {
+              g.transfer = isChecked;
+            } else if (targetType === 'acomp') {
+              if (!g.acompanhante) g.acompanhante = {};
+              g.acompanhante.transfer = isChecked;
+            } else if (targetType === 'kid_titular' && Array.isArray(g.criancasTitular) && g.criancasTitular[kidIdx]) {
+              g.criancasTitular[kidIdx].transfer = isChecked;
+            } else if (targetType === 'kid_acomp' && g.acompanhante && Array.isArray(g.acompanhante.criancasAcomp) && g.acompanhante.criancasAcomp[kidIdx]) {
+              g.acompanhante.criancasAcomp[kidIdx].transfer = isChecked;
+            }
+
+            g.updatedAt = new Date().toISOString();
+            safeSetStorage(STORAGE_KEY_GROUPS, JSON.stringify(guestGroups));
+            renderAll();
+            pushToGoogleSheet();
+            showToast(isChecked ? '🚐 Transfer marcado e salvo na planilha!' : 'Transfer desmarcado e atualizado na planilha!', 'success');
+            return;
           }
 
-          g.updatedAt = new Date().toISOString();
-          safeSetStorage(STORAGE_KEY_GROUPS, JSON.stringify(guestGroups));
-          renderAll();
-          pushToGoogleSheet();
-          showToast(isChecked ? '🚐 Transfer marcado e salvo na planilha!' : 'Transfer desmarcado e atualizado na planilha!', 'success');
+          var chkAcomodacao = e.target.closest('input[data-action="toggle-acomodacao"]');
+          if (chkAcomodacao) {
+            var groupIdAc = chkAcomodacao.getAttribute('data-group-id');
+            var targetTypeAc = chkAcomodacao.getAttribute('data-acomodacao-target');
+            var kidIdxAc = parseInt(chkAcomodacao.getAttribute('data-kid-index'), 10);
+            var isCheckedAc = Boolean(chkAcomodacao.checked);
+
+            var gAc = guestGroups.find(function (item) { return item.id === groupIdAc; });
+            if (!gAc) return;
+
+            if (targetTypeAc === 'titular') {
+              gAc.acomodacao = isCheckedAc;
+            } else if (targetTypeAc === 'acomp') {
+              if (!gAc.acompanhante) gAc.acompanhante = {};
+              gAc.acompanhante.acomodacao = isCheckedAc;
+            } else if (targetTypeAc === 'kid_titular' && Array.isArray(gAc.criancasTitular) && gAc.criancasTitular[kidIdxAc]) {
+              gAc.criancasTitular[kidIdxAc].acomodacao = isCheckedAc;
+            } else if (targetTypeAc === 'kid_acomp' && gAc.acompanhante && Array.isArray(gAc.acompanhante.criancasAcomp) && gAc.acompanhante.criancasAcomp[kidIdxAc]) {
+              gAc.acompanhante.criancasAcomp[kidIdxAc].acomodacao = isCheckedAc;
+            }
+
+            gAc.updatedAt = new Date().toISOString();
+            safeSetStorage(STORAGE_KEY_GROUPS, JSON.stringify(guestGroups));
+            renderAll();
+            pushToGoogleSheet();
+            showToast(isCheckedAc ? '🏨 Acomodação marcada e salva na planilha!' : 'Acomodação desmarcada e atualizada na planilha!', 'success');
+          }
         });
 
         // Search and Filter listeners
